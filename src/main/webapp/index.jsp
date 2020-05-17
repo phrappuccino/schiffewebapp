@@ -33,33 +33,47 @@
 <div class = "container">
     <div class="row">
         <div class="col-9">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">SVNR</th>
-                <th scope="col">Vorname</th>
-                <th scope="col">Nachname</th>
-                <th scope="col">Strasse</th>
-                <th scope="col">Hausnummer</th>
-                <th scope="col">PLZ</th>
-                <th scope="col">Ort</th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="person" items="${personen.rows}">
-                    <tr>
-                        <th scope="col">
-                            <c:out value="${person.SVNR}"/>
-                            <c:out value="${person.Vorname}"/>
-                            <c:out value="${person.Nachname}"/>
-                            <c:out value="${person.Straße}"/>
-                            <c:out value="${person.Hausnummer}"/>
-                            <c:out value="${person.PLZ}"/>
-                            <c:out value="${person.Ort}"/>
-                        </th>
-                    </tr>
-                </c:forEach>
-            </tbody>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">SVNR</th>
+                    <th scope="col">Vorname</th>
+                    <th scope="col">Nachname</th>
+                    <th scope="col">Strasse</th>
+                    <th scope="col">Hausnummer</th>
+                    <th scope="col">PLZ</th>
+                    <th scope="col">Ort</th>
+<%--                    <th scope="col"></th>--%>
+                </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="person" items="${personen.rows}">
+                        <tr>
+                            <th scope="col">
+                                <c:out value="${person.SVNR}"/>
+                            </th>
+                            <th scope="col">
+                                <c:out value="${person.Vorname}"/>
+                            </th>
+                            <th scope="col">
+                                <c:out value="${person.Ort}"/>
+                            </th>
+<%--                            <th scope="col">--%>
+<%--                                <c:out value="${person.Straße}"/>--%>
+<%--                            </th>--%>
+<%--                            <th scope="col">--%>
+<%--                                <c:out value="${person.Hausnummer}"/>--%>
+<%--                            </th>--%>
+<%--                            <th scope="col">--%>
+<%--                                <c:out value="${person.PLZ}"/>--%>
+<%--                            </th>--%>
+<%--                            <th scope="col">--%>
+<%--                                <c:out value="${person.Ort}"/>--%>
+<%--                            </th>--%>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
