@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 
 <html>
 <head>
@@ -58,18 +59,18 @@
                             <th scope="col">
                                 <c:out value="${person.Ort}"/>
                             </th>
-<%--                            <th scope="col">--%>
-<%--                                <c:out value="${person.Straße}"/>--%>
-<%--                            </th>--%>
-<%--                            <th scope="col">--%>
-<%--                                <c:out value="${person.Hausnummer}"/>--%>
-<%--                            </th>--%>
-<%--                            <th scope="col">--%>
-<%--                                <c:out value="${person.PLZ}"/>--%>
-<%--                            </th>--%>
-<%--                            <th scope="col">--%>
-<%--                                <c:out value="${person.Ort}"/>--%>
-<%--                            </th>--%>
+                            <th scope="col">
+                                <c:out value="${person.Straße}"/>
+                            </th>
+                            <th scope="col">
+                                <c:out value="${person.Hausnummer}"/>
+                            </th>
+                            <th scope="col">
+                                <c:out value="${person.PLZ}"/>
+                            </th>
+                            <th scope="col">
+                                <c:out value="${person.Ort}"/>
+                            </th>
                         </tr>
                     </c:forEach>
                 </tbody>
