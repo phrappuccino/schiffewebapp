@@ -65,8 +65,10 @@
                                 <c:out value="${person.Ort}"/>
                             </th>
                             <th>
-                                <form name="gotel" action="telenr.jsp">
-                                    <A href="javascript: submitform(${person.SVNR})">Telefon Nummer</A>
+                                <form method="post" action="personen">
+                                    <button class="btn btn-danger" type="submit" name="gotel" value="<c:out value="${person.SVNR}"/>">
+                                        Tele
+                                    </button>
                                 </form>
                             </th>
                         </tr>
@@ -77,16 +79,16 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    function submitform(SVN)
-    {
-        if(document.gotel.onsubmit())
-        {
-            session.setAttribute("currentUser", SVN);
-            document.gotel.submit();
-        }
-    }
-</script>
+<%--<script type="text/javascript">--%>
+<%--    function submitform(SVN)--%>
+<%--    {--%>
+<%--        if(document.gotel.onsubmit())--%>
+<%--        {--%>
+<%--            session.setAttribute("currentUser", SVN);--%>
+<%--            document.gotel.submit();--%>
+<%--        }--%>
+<%--    }--%>
+<%--</script>--%>
 
 <jsp:include page="footer.jsp"/>
 </body>

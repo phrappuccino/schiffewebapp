@@ -12,6 +12,9 @@
 </head>
 <body>
     <h3>Telefon Nummer Page</h3>
+    <%Long userID = (Long) session.getAttribute("currentUser");%>
+    <h3><%=userID%></h3>
+
 <jsp:include page="footer.jsp"/>
 </body>
 </html>
