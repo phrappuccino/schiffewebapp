@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <html>
 <head>
@@ -22,14 +23,6 @@
 <sql:query var="personen">
     select * from person
 </sql:query>
-
-
-<%--<ul>--%>
-<%--    <c:forEach var="person" items="${personen.rows}">--%>
-<%--        --%>
-<%--&lt;%&ndash;        <li><c:out value="${person.Vorname}"/></li>&ndash;%&gt;--%>
-<%--    </c:forEach>--%>
-<%--</ul>--%>
 
 <div class = "container">
     <div class="row">
@@ -71,6 +64,11 @@
                             <th scope="col">
                                 <c:out value="${person.Ort}"/>
                             </th>
+                            <th>
+                                <form name="gotel" action="telenr.jsp">
+                                    <A href="javascript: submitform(${person.SVNR})">Telefon Nummer</A>
+                                </form>
+                            </th>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -79,7 +77,17 @@
     </div>
 </div>
 
-<jsp:include page="footer.jsp"/>
+<script type="text/javascript">
+    function submitform(SVN)
+    {
+        if(document.gotel.onsubmit())
+        {
+            session.setAttribute("currentUser", SVN);
+            document.gotel.submit();
+        }
+    }
+</script>
 
+<jsp:include page="footer.jsp"/>
 </body>
 </html>
