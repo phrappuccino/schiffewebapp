@@ -30,6 +30,12 @@ public class PersonenServlet extends HttpServlet{
             dispatcher = request.getRequestDispatcher("telenr.jsp");
         }
 
+        if (request.getParameter("upgrade") != null) {
+            Long userID = Long.parseLong(request.getParameter("upgrade"));
+            session.setAttribute("currentUser", userID);
+            dispatcher = request.getRequestDispatcher("upgradePerson.jsp");
+        }
+
         dispatcher.forward(request, response);
     }
 }
