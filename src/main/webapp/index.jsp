@@ -74,7 +74,7 @@
                             <th>
                                 <form method="post" action="personen">
                                     <button class="btn btn-upgrade" type="submit" name="upgrade" value="<c:out value="${person.SVNR}"/>">
-                                        Upgrade-Person
+                                        Details-Person
                                     </button>
                                 </form>
                             </th>
