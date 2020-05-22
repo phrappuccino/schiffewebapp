@@ -84,11 +84,10 @@ public class PersonenServlet extends HttpServlet{
 
             session.setAttribute("currentUser", userID);
 
-            //Insert Into
+            /* Insert Into */
 
             dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
         }
-
 
         dispatcher.forward(request, response);
     }
