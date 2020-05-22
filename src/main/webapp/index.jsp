@@ -9,7 +9,7 @@
 <html>
 <head>
     <jsp:include page="header.jsp"/>
-    <title>SELECT Operation</title>
+    <title>Home</title>
 </head>
 <body>
 
