@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
+import java.math.BigInteger;
 
 
 @WebServlet("/personen")
@@ -51,8 +52,43 @@ public class PersonenServlet extends HttpServlet{
         if (request.getParameter("upgrade") != null) {
             Long userID = Long.parseLong(request.getParameter("upgrade"));
             session.setAttribute("currentUser", userID);
-            dispatcher = request.getRequestDispatcher("upgradePerson.jsp");
+            dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
         }
+
+        if (request.getParameter("update") != null) {
+            //Get Parameter from page
+            Long userID = Long.parseLong(request.getParameter("SVNR"));
+            int BLZ = Integer.parseInt(request.getParameter("BLZ"));
+            String AngKapTech = request.getParameter("capTech");
+            BigInteger KapPatNr = BigInteger.valueOf(Long.parseLong(request.getParameter("KapitaenspatentNummer")));
+            int seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
+            String LizNr = request.getParameter("Lizenznummer");
+            String Ausbild = request.getParameter("Ausbildungsgrad");
+
+            session.setAttribute("currentUser", userID);
+
+            //Update
+
+            dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
+        }
+
+        if (request.getParameter("speichern") != null) {
+            //Get Parameter from Page
+            Long userID = Long.parseLong(request.getParameter("SVNR"));
+            int BLZ = Integer.parseInt(request.getParameter("BLZ"));
+            String AngKapTech = request.getParameter("capTech");
+            BigInteger KapPatNr = BigInteger.valueOf(Long.parseLong(request.getParameter("KapitaenspatentNummer")));
+            int seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
+            String LizNr = request.getParameter("Lizenznummer");
+            String Ausbild = request.getParameter("Ausbildungsgrad");
+
+            session.setAttribute("currentUser", userID);
+
+            //Insert Into
+
+            dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
+        }
+
 
         dispatcher.forward(request, response);
     }
