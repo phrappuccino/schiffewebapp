@@ -36,7 +36,7 @@
 <%--<h3><c:out value="${sessionScope.currentUser}"></c:out></h3>--%>
 
 <sql:query var="angestellt">
-    select gehaltskonto.Kontonummer AS Kontonummer from angestellter_istpersonmitgehaltskonto A JOIN gehaltskonto ON A.BLZ = gehaltskonto.BLZ and A.Kontonummer = gehaltskonto.Kontonummer where A.SVNR = <%=userID%>
+    select gehaltskonto.Kontonummer AS Kontonummer, bank.Bankname AS Bankname from angestellter_istpersonmitgehaltskonto A JOIN gehaltskonto ON A.BLZ = gehaltskonto.BLZ and A.Kontonummer = gehaltskonto.Kontonummer JOIN bank ON A.BLZ = bank.BLZ where A.SVNR = <%=userID%>
 </sql:query>
 
 <%--<h3><c:out value="${angestellt.rowCount}"/></h3>--%>
@@ -72,23 +72,29 @@
     </c:when>
 <%--        Angestellter gefunden--%>
         <c:otherwise>
+            <label for="bank">Bank:</label>
+            <input type="text" id="bank" name="Bank"
+            <c:forEach var="ang" items="${angestellt.rows}">
+                value="<c:out value="${ang.Bankname}"/>" disabled="true" maxlength="30"/>
+            </c:forEach>
         <label for="Kontonummer">Kontonummer:</label>
         <input type="text" id="Kontonummer" name="Kontonummer"
                 <c:forEach var="ang" items="${angestellt.rows}">
-            value="<c:out value="${ang.Kontonummer}"/>" maxlength="30"/>
+            value="<c:out value="${ang.Kontonummer}"/>" disabled="true" maxlength="30"/>
                 </c:forEach>
+            <br>
             <%--Techniker Kapitaen oder nur Angestellter--%>
             <sql:query var="techniker">
                 select * from techniker_istangestellter where SVNR = <%=userID%>
             </sql:query>
 
-            <h3>Techniker: <c:out value="${techniker.rowCount}"/></h3>
+<%--            <h3>Techniker: <c:out value="${techniker.rowCount}"/></h3>--%>
 
             <sql:query var="kapitaen">
                 select * from kapitän_istangestellter where SVNR = <%=userID%>
             </sql:query>
 
-            <h3>Kapitaen: <c:out value="${kapitaen.rowCount}"/></h3>
+<%--            <h3>Kapitaen: <c:out value="${kapitaen.rowCount}"/></h3>--%>
 
 
 
@@ -120,7 +126,7 @@
     </c:when>
     <c:otherwise>
         <label for="capTech">Angestellter Techniker oder Kapitaen:</label>
-        <input type="radio" id="rdAngestellter" onclick="javascript:toggler('Angestellter')" name="capTech" value="Angestellter" checked="true"/>
+        <input type="radio" id="rdAngestellter" onclick="javascript:toggler('Angestellter')" name="capTech" value="Angestellter"/>
         <label for="Angestellter">Angestellter</label>
         <input type="radio" id="rdTechniker" onclick="javascript:toggler('Techniker')"  name="capTech" value="Techniker"/>
         <label for="Techniker">Techniker</label>
@@ -166,11 +172,18 @@
                 case "Techniker":
                     document.getElementById("Kapitaen").style.display = "none";
                     document.getElementById("Techniker").style.display = "inline";
+                    document.getElementById("bank").setAttribute("disabled");
+                    document.getElementById("Kontonummer").setAttribute("disabled");
                     break;
                 case "Kapitaen":
                     document.getElementById("Kapitaen").style.display = "inline";
                     document.getElementById("Techniker").style.display = "none";
+                    document.getElementById("bank").setAttribute("disabled");
+                    document.getElementById("Kontonummer").setAttribute("disabled");
                     break;
+                case "Angestellter":
+                    document.getElementById("bank").removeAttribute("disabled");
+                    document.getElementById("Kontonummer").removeAttribute("disabled");
                 default:
                     document.getElementById("Kapitaen").style.display = "none";
                     document.getElementById("Techniker").style.display = "none";
