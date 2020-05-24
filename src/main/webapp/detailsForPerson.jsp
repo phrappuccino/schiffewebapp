@@ -36,7 +36,7 @@
 <%--<h3><c:out value="${sessionScope.currentUser}"></c:out></h3>--%>
 
 <sql:query var="angestellt">
-    select gehaltskonto.Kontonummer AS Kontonummer, bank.Bankname AS Bankname from angestellter_istpersonmitgehaltskonto A JOIN gehaltskonto ON A.BLZ = gehaltskonto.BLZ and A.Kontonummer = gehaltskonto.Kontonummer JOIN bank ON A.BLZ = bank.BLZ where A.SVNR = <%=userID%>
+    select gehaltskonto.Kontonummer AS Kontonummer, bank.Bankname AS Bankname, bank.BLZ AS BLZ from angestellter_istpersonmitgehaltskonto A JOIN gehaltskonto ON A.BLZ = gehaltskonto.BLZ and A.Kontonummer = gehaltskonto.Kontonummer JOIN bank ON A.BLZ = bank.BLZ where A.SVNR = <%=userID%>
 </sql:query>
 
 <%--<h3><c:out value="${angestellt.rowCount}"/></h3>--%>
@@ -45,153 +45,221 @@
 <%--</c:forEach>--%>
 
 
+<div class = "container">
+    <div class="row">
+        <div class="col-9">
+            <table class="table">
+
+
+                <form method="post" action="personen">
+                    <tr>
+                        <th>
+                            <label for="SVNR">SVNR uebernommen:</label>
+                            <input type="text" id="SVNR" name="SVNR" disabled="true" maxlength="50" value="<%=userID%>">
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                    <c:choose>
+                <%--        Angestellter wurde nicht gefunden--%>
+                    <c:when test="${angestellt.rowCount <= 0}">
+
+                            <label for="BLZ">Bankleitzahl:</label>
+
+                            <select id="BLZ" name="BLZ">
+                                <c:forEach var="bank" items="${banken.rows}">
+                                    <option value="<c:out value="${bank.BLZ}"/>">
+                                        <c:out value="${bank.Bankname}"/>
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        <label for="Kontonummer">Kontonummer:</label>
+                        <input type="text" id="Kontonummer" name="Kontonummer" maxlength="30"/>
+                        <br>
+                        <input type="text" id="bool_Ang" style="display: none" disabled value="<c:out value="0"/>"></input>
+
+                    </c:when>
+                <%--        Angestellter gefunden--%>
+                        <c:otherwise>
+                            <label for="BLZ">Bankleitzahl:</label>
+                            <select id="BLZ" name="BLZ" disabled>
+                                <c:forEach var="bank" items="${banken.rows}">
+                                    <c:choose>
+                                    <c:when test="${(angestellt.rows[0].BLZ == bank.BLZ)}">
+                                        <option value="<c:out value="${bank.BLZ}"/>" selected>
+                                            <c:out value="${bank.Bankname}"/>
+                                        </option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="<c:out value="${bank.BLZ}"/>">
+                                            <c:out value="${bank.Bankname}"/>
+                                        </option>
+                                    </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </select>
 
 
 
-<form method="post" action="personen">
 
-    <label for="SVNR">SVNR uebernommen:</label>
-    <input type="text" id="SVNR" name="SVNR" disabled="true" maxlength="50" value="<%=userID%>">
-    <br>
-    <c:choose>
-<%--        Angestellter wurde nicht gefunden--%>
-    <c:when test="${angestellt.rowCount <= 0}">
 
-            <label for="BLZ">Bankleitzahl:</label>
+                        <label for="Kontonummer">Kontonummer:</label>
+                        <input type="text" id="Kontonummer" name="Kontonummer"
+                                <c:forEach var="ang" items="${angestellt.rows}">
+                            value="<c:out value="${ang.Kontonummer}"/>" disabled="true" maxlength="30"/>
+                                </c:forEach>
+                            <br>
+                            <%--Techniker Kapitaen oder nur Angestellter--%>
+                            <sql:query var="techniker">
+                                select * from techniker_istangestellter where SVNR = <%=userID%>
+                            </sql:query>
 
-            <select id="BLZ">
-                <c:forEach var="bank" items="${banken.rows}">
-                    <option value="<c:out value="${bank.BLZ}"/>">
-                        <c:out value="${bank.Bankname}"/>
-                    </option>
-                </c:forEach>
-            </select>
-        <label for="Kontonummer">Kontonummer:</label>
-        <input type="text" id="Kontonummer" name="Kontonummer" maxlength="30"/>
-        <br>
-    </c:when>
-<%--        Angestellter gefunden--%>
-        <c:otherwise>
-            <label for="bank">Bank:</label>
-            <input type="text" id="bank" name="Bank"
-            <c:forEach var="ang" items="${angestellt.rows}">
-                value="<c:out value="${ang.Bankname}"/>" disabled="true" maxlength="30"/>
-            </c:forEach>
-        <label for="Kontonummer">Kontonummer:</label>
-        <input type="text" id="Kontonummer" name="Kontonummer"
-                <c:forEach var="ang" items="${angestellt.rows}">
-            value="<c:out value="${ang.Kontonummer}"/>" disabled="true" maxlength="30"/>
-                </c:forEach>
-            <br>
-            <%--Techniker Kapitaen oder nur Angestellter--%>
-            <sql:query var="techniker">
-                select * from techniker_istangestellter where SVNR = <%=userID%>
-            </sql:query>
+                            <input type="text" id="bool_Tech" style="display: none" disabled value="<c:out value="${techniker.rowCount}"/>"></input>
 
-<%--            <h3>Techniker: <c:out value="${techniker.rowCount}"/></h3>--%>
+                            <sql:query var="kapitaen">
+                                select * from kapitän_istangestellter where SVNR = <%=userID%>
+                            </sql:query>
 
-            <sql:query var="kapitaen">
-                select * from kapitän_istangestellter where SVNR = <%=userID%>
-            </sql:query>
-
-<%--            <h3>Kapitaen: <c:out value="${kapitaen.rowCount}"/></h3>--%>
+                            <input type="text" id="bool_Kap" style="display: none" disabled value="<c:out value="${kapitaen.rowCount}"/>"></input>
 
 
 
+                            <input type="text" id="bool_Ang" disabled style="display: none" value="<c:out value="1"/>"></input>
 
-        </c:otherwise>
-</c:choose>
-    <c:choose>
-    <c:when test="${((kapitaen.rowCount > 0) or (techniker.rowCount > 0))}">
-        <c:if test="${(kapitaen.rowCount > 0)}">
+                        </c:otherwise>
+                </c:choose>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                    <c:choose>
+                    <c:when test="${((kapitaen.rowCount > 0) or (techniker.rowCount > 0))}">
+                        <c:if test="${(kapitaen.rowCount > 0)}">
 
-                <c:forEach var="kap" items="${kapitaen.rows}">
-                    <label for="KapitaenspatentNummer">Nummer des Kapitaenspatentes:</label>
-                    <input type="Text" id="KapitaenspatentNummer" name="KapitaenspatentNummer" value="<c:out value="${kap.KapitänspatentNummer}"/>"maxlength="255"/>
-                    <label for="Seemeilen">Gefahrene Seemeilen:</label>
-                    <input type="Text" id="Seemeilen" name="Seemeilen" value="<c:out value="${kap.Seemeilen}"/>"/>
-                </c:forEach>
+                                <c:forEach var="kap" items="${kapitaen.rows}">
+                                    <label for="KapitaenspatentNummer">Nummer des Kapitaenspatentes:</label>
+                                    <input type="Text" id="KapitaenspatentNummer" name="KapitaenspatentNummer" value="<c:out value="${kap.KapitänspatentNummer}"/>"maxlength="255"/>
+                                    <label for="Seemeilen">Gefahrene Seemeilen:</label>
+                                    <input type="Text" id="Seemeilen" name="Seemeilen" value="<c:out value="${kap.Seemeilen}"/>"/>
+                                </c:forEach>
 
-        </c:if>
-        <c:if test="${(techniker.rowCount > 0)}">
-            <c:forEach var="tec" items="${techniker.rows}">
-                <label for="Lizenznummer">Techniker Lizenznummer:</label>
-                <input type="Text" id="Lizenznummer" name="Lizenznummer" value="<c:out value="${tec.Lizenznummer}"/> "maxlength="255"/>
-                <label for="Ausbildungsgrad">Ausbildungsgrad des Technikers:</label>
-                <input type="Text" id="Ausbildungsgrad" name="Ausbildungsgrad" value="<c:out value="${tec.Ausbildungsgrad}"/> "maxlength="255"/>
-            </c:forEach>
-        </c:if>
-        <c:set var="updaterButton" value="1"/>
+                        </c:if>
+                        <c:if test="${(techniker.rowCount > 0)}">
+                            <c:forEach var="tec" items="${techniker.rows}">
+                                <label for="Lizenznummer">Techniker Lizenznummer:</label>
+                                <input type="Text" id="Lizenznummer" name="Lizenznummer" value="<c:out value="${tec.Lizenznummer}"/> "maxlength="255"/>
+                                <label for="Ausbildungsgrad">Ausbildungsgrad:</label>
+                                <input type="Text" id="Ausbildungsgrad" name="Ausbildungsgrad" value="<c:out value="${tec.Ausbildungsgrad}"/> "maxlength="255"/>
+                            </c:forEach>
+                        </c:if>
 
-    </c:when>
-    <c:otherwise>
-        <label for="capTech">Angestellter Techniker oder Kapitaen:</label>
-        <input type="radio" id="rdAngestellter" onclick="javascript:toggler('Angestellter')" name="capTech" value="Angestellter"/>
-        <label for="Angestellter">Angestellter</label>
-        <input type="radio" id="rdTechniker" onclick="javascript:toggler('Techniker')"  name="capTech" value="Techniker"/>
-        <label for="Techniker">Techniker</label>
-        <input type="radio" id="rdKapitaen" onclick="javascript:toggler('Kapitaen')"  name="capTech" value="Kapitaen"/>
-        <label for="Kapitaen">Kapitaen</label>
-        <br>
-        <div id="Techniker" style="display: none">
-            <label for="Lizenznummer">Techniker Lizenznummer:</label>
-            <input type="Text" id="Lizenznummer" name="Lizenznummer" maxlength="255"/>
-            <label for="Ausbildungsgrad">Ausbildungsgrad des Technikers:</label>
-            <input type="Text" id="Ausbildungsgrad" name="Ausbildungsgrad" maxlength="255"/>
+                    </c:when>
+                    <c:otherwise>
+                        <label for="capTech">Angestellter Techniker oder Kapitaen:</label>
+                        <input type="radio" id="rdAngestellter" onclick="javascript:toggler('Angestellter')" name="capTech" value="Angestellter"/>
+                        <label for="Angestellter">Angestellter</label>
+                        <input type="radio" id="rdTechniker" onclick="javascript:toggler('Techniker')"  name="capTech" value="Techniker"/>
+                        <label for="Techniker">Techniker</label>
+                        <input type="radio" id="rdKapitaen" onclick="javascript:toggler('Kapitaen')"  name="capTech" value="Kapitaen"/>
+                        <label for="Kapitaen">Kapitaen</label>
+                        <br>
+                        <div id="Techniker" style="display: none">
+                            <label for="Lizenznummer">Techniker Lizenznummer:</label>
+                            <input type="Text" id="Lizenznummer" name="Lizenznummer" maxlength="255"/>
+                            <label for="Ausbildungsgrad">Ausbildungsgrad:</label>
+                            <input type="Text" id="Ausbildungsgrad" name="Ausbildungsgrad" maxlength="255"/>
+                        </div>
+                        <div id="Kapitaen" style="display: none">
+                            <label for="KapitaenspatentNummer">Nummer des Kapitaenspatentes:</label>
+                            <input type="Text" id="KapitaenspatentNummer" name="KapitaenspatentNummer" maxlength="255"/>
+                            <label for="Seemeilen">Gefahrene Seemeilen:</label>
+                            <input type="Text" id="Seemeilen" name="Seemeilen"/>
+                        </div>
+                    </c:otherwise>
+                    </c:choose>
+                        </th>
+                </tr>
+                <tr>
+                    <th align="center">
+                    <br>
+                        <button id="btn-speichern" type="submit" value="Speichern" disabled>Speichern</button>
+                        <button id="btn-update" type="submit" value="Update" disabled>Update</button>
+                    </th>
+                </tr>
+                </form>
+            </table>
         </div>
-        <div id="Kapitaen" style="display: none">
-            <label for="KapitaenspatentNummer">Nummer des Kapitaenspatentes:</label>
-            <input type="Text" id="KapitaenspatentNummer" name="KapitaenspatentNummer" maxlength="255"/>
-            <label for="Seemeilen">Gefahrene Seemeilen:</label>
-            <input type="Text" id="Seemeilen" name="Seemeilen"/>
-        </div>
-        <c:set var="updaterButton" value="0"/>
-    </c:otherwise>
-    </c:choose>
-
-
-<br>
-    <c:choose>
-    <c:when test="${(updaterButton == 0)}">
-        <button type="submit" value="Speichern" >Speichern</button>
-        <button type="submit" value="Update" disabled>Update</button>
-    </c:when>
-        <c:otherwise>
-            <button type="submit" value="Speichern" disabled>Speichern</button>
-            <button type="submit" value="Update">Update</button>
-        </c:otherwise>
-    </c:choose>
-
-</form>
-
+    </div>
+</div>
 <jsp:include page="footer.jsp"/>
 <script>
+    $(document).ready(function(){
+        if(document.getElementById("bool_Kap").value == 1){
+            toggler("Kapitaen");
+        }else if(document.getElementById("bool_Tech").value == 1) {
+            toggler("Techniker");
+        }else {
+            toggler("Angestellter");
+        }
+
+    });
+
+
 
         function toggler(inputValue) {
             switch(inputValue) {
                 case "Techniker":
                     document.getElementById("Kapitaen").style.display = "none";
                     document.getElementById("Techniker").style.display = "inline";
-                    document.getElementById("bank").setAttribute("disabled");
-                    document.getElementById("Kontonummer").setAttribute("disabled");
+                    document.getElementById("BLZ").setAttribute("disabled", "disabled");
+                    document.getElementById("Kontonummer").setAttribute("disabled", "disabled")
                     break;
                 case "Kapitaen":
                     document.getElementById("Kapitaen").style.display = "inline";
                     document.getElementById("Techniker").style.display = "none";
-                    document.getElementById("bank").setAttribute("disabled");
-                    document.getElementById("Kontonummer").setAttribute("disabled");
+                    document.getElementById("BLZ").setAttribute("disabled", "disabled");
+                    document.getElementById("Kontonummer").setAttribute("disabled", "disabled")
                     break;
                 case "Angestellter":
-                    document.getElementById("bank").removeAttribute("disabled");
+                    document.getElementById("BLZ").removeAttribute("disabled");
                     document.getElementById("Kontonummer").removeAttribute("disabled");
                 default:
                     document.getElementById("Kapitaen").style.display = "none";
                     document.getElementById("Techniker").style.display = "none";
 
             }
+            changeButton(inputValue);
             changeValueInputs(inputValue);
         };
 
+        function changeButton(inputValue) {
+            switch (inputValue) {
+                case "Angestellter":
+                    document.getElementById("rdAngestellter").setAttribute("checked", "checked");
+                    changerForButtons("bool_Ang");
+                    break;
+                case "Techniker":
+                    document.getElementById("rdTechniker").setAttribute("checked", "checked");
+                    changerForButtons("bool_Tech");
+                    break;
+                case "Kapitaen":
+                    document.getElementById("rdKapitaen").setAttribute("checked", "checked");
+                    changerForButtons("bool_Kap");
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        function changerForButtons(boolValue){
+            if(document.getElementById(boolValue).value == 1){
+                document.getElementById("btn-speichern").setAttribute("disabled", "disbaled");
+                document.getElementById("btn-update").removeAttribute("disabled");
+            }else {
+                document.getElementById("btn-speichern").removeAttribute("disabled");
+                document.getElementById("btn-update").setAttribute("disabled", "disabled");
+            }
+        }
 
     function changeValueInputs(inputValue){
         if (inputValue == "Angestellter")
