@@ -18,7 +18,7 @@
 <head>
 
     <jsp:include page="header.jsp"/>
-
+    <title>Details for Person</title>
 </head>
 
 <body>
@@ -63,26 +63,30 @@
                     <c:choose>
                 <%--        Angestellter wurde nicht gefunden--%>
                     <c:when test="${angestellt.rowCount <= 0}">
+                            <div id="blzNr">
+                            <label for="Bankleitzahl">Bankleitzahl:</label>
 
-                            <label for="BLZ">Bankleitzahl:</label>
-
-                            <select id="BLZ" name="BLZ">
+                            <select id="Bankleitzahl" name="Bankleitzahl">
                                 <c:forEach var="bank" items="${banken.rows}">
                                     <option value="<c:out value="${bank.BLZ}"/>">
                                         <c:out value="${bank.Bankname}"/>
                                     </option>
                                 </c:forEach>
                             </select>
+                            </div>
+                        <div id="KntNr">
                         <label for="Kontonummer">Kontonummer:</label>
                         <input type="text" id="Kontonummer" name="Kontonummer" maxlength="30"/>
+                        </div>
                         <br>
-                        <input type="text" id="bool_Ang" style="display: none" disabled value="<c:out value="0"/>"></input>
+                        <input type="number" id="bool_Ang" name="bool_Ang" style="display: none" value=0></input>
 
                     </c:when>
                 <%--        Angestellter gefunden--%>
                         <c:otherwise>
-                            <label for="BLZ">Bankleitzahl:</label>
-                            <select id="BLZ" name="BLZ" disabled>
+                            <div id="blzNr">
+                            <label for="Bankleitzahl">Bankleitzahl:</label>
+                            <select id="Bankleitzahl" name="Bankleitzahl">
                                 <c:forEach var="bank" items="${banken.rows}">
                                     <c:choose>
                                     <c:when test="${(angestellt.rows[0].BLZ == bank.BLZ)}">
@@ -98,33 +102,35 @@
                                     </c:choose>
                                 </c:forEach>
                             </select>
+                            </div>
+                            <input type="number" id="bool_Ang" name="bool_Ang" style="display: none" value=1></input>
 
 
 
-
-
+                        <div id="KntNr">
                         <label for="Kontonummer">Kontonummer:</label>
                         <input type="text" id="Kontonummer" name="Kontonummer"
                                 <c:forEach var="ang" items="${angestellt.rows}">
-                            value="<c:out value="${ang.Kontonummer}"/>" disabled="true" maxlength="30"/>
+                            value="<c:out value="${ang.Kontonummer}"/>" maxlength="30"/>
                                 </c:forEach>
+                        </div>
                             <br>
                             <%--Techniker Kapitaen oder nur Angestellter--%>
                             <sql:query var="techniker">
                                 select * from techniker_istangestellter where SVNR = <%=userID%>
                             </sql:query>
 
-                            <input type="text" id="bool_Tech" style="display: none" disabled value="<c:out value="${techniker.rowCount}"/>"></input>
+                            <input type="number" id="bool_Tech" name ="bool_Tech" style="display: none" value="<c:out value="${techniker.rowCount}"/>"></input>
 
                             <sql:query var="kapitaen">
                                 select * from kapitän_istangestellter where SVNR = <%=userID%>
                             </sql:query>
 
-                            <input type="text" id="bool_Kap" style="display: none" disabled value="<c:out value="${kapitaen.rowCount}"/>"></input>
+                            <input type="number" id="bool_Kap" name="bool_Kap" style="display: none" value="<c:out value="${kapitaen.rowCount}"/>"></input>
 
 
 
-                            <input type="text" id="bool_Ang" disabled style="display: none" value="<c:out value="1"/>"></input>
+
 
                         </c:otherwise>
                 </c:choose>
@@ -211,18 +217,18 @@
                 case "Techniker":
                     document.getElementById("Kapitaen").style.display = "none";
                     document.getElementById("Techniker").style.display = "inline";
-                    document.getElementById("BLZ").setAttribute("disabled", "disabled");
-                    document.getElementById("Kontonummer").setAttribute("disabled", "disabled")
+                    document.getElementById("blzNr").style.display = "none";
+                    document.getElementById("KntNr").style.display = "none";
                     break;
                 case "Kapitaen":
                     document.getElementById("Kapitaen").style.display = "inline";
                     document.getElementById("Techniker").style.display = "none";
-                    document.getElementById("BLZ").setAttribute("disabled", "disabled");
-                    document.getElementById("Kontonummer").setAttribute("disabled", "disabled")
+                    document.getElementById("blzNr").style.display = "none";
+                    document.getElementById("KntNr").style.display = "none";
                     break;
                 case "Angestellter":
-                    document.getElementById("BLZ").removeAttribute("disabled");
-                    document.getElementById("Kontonummer").removeAttribute("disabled");
+                    document.getElementById("blzNr").style.display = "inline";
+                    document.getElementById("KntNr").style.display = "inline";
                 default:
                     document.getElementById("Kapitaen").style.display = "none";
                     document.getElementById("Techniker").style.display = "none";

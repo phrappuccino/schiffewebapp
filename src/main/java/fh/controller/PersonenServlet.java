@@ -54,19 +54,11 @@ public class PersonenServlet extends HttpServlet{
             session.setAttribute("currentUser", userID);
             dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
         }
-
+        if (request.getParameter("btn-ok") != null) {
+            //nothing to do just go back to index
+        }
         if (request.getParameter("btn-update") != null) {
             //Get Parameter from page
-            Long userID = Long.parseLong(request.getParameter("SVNR"));
-            int BLZ = Integer.parseInt(request.getParameter("BLZ"));
-            String AngKapTech = request.getParameter("capTech");
-            BigInteger KapPatNr = BigInteger.valueOf(Long.parseLong(request.getParameter("KapitaenspatentNummer")));
-            int seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
-            String LizNr = request.getParameter("Lizenznummer");
-            String Ausbild = request.getParameter("Ausbildungsgrad");
-
-            session.setAttribute("currentUser", userID);
-
             //Update
 
             dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
@@ -76,27 +68,63 @@ public class PersonenServlet extends HttpServlet{
             //Get Parameter from Page
             int BLZ = 0;
             int seemeilen = 0;
+            boolean ang = false;
             BigInteger KapPatNr = BigInteger.valueOf(0);
 
-            if(!(request.getParameter("BLZ").isEmpty()))
-                BLZ = Integer.parseInt(request.getParameter("BLZ"));
+
+            if (Integer.parseInt(request.getParameter("bool_Ang")) > 0){
+                ang = true;
+                System.out.println(request.getParameter("bool_Ang"));
+                System.out.println(request.getParameter("Bankleitzahl").toString());
+                BLZ = Integer.parseInt(request.getParameter("Bankleitzahl"));
+            }else {
+                ang = false;
+            }
+
             if(!(request.getParameter("KapitaenspatentNummer").isEmpty()))
                 KapPatNr = BigInteger.valueOf(Long.parseLong(request.getParameter("KapitaenspatentNummer")));
             if(!(request.getParameter("Seemeilen").isEmpty()))
                 seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
+
             String LizNr = request.getParameter("Lizenznummer");
             String Ausbild = request.getParameter("Ausbildungsgrad");
             String Kontonummer = request.getParameter("Kontonummer");
             String AngKapTech = request.getParameter("capTech");
             String currentUser = session.getAttribute("currentUser").toString();
             String sqlstring = "";
+            session.setAttribute("insertKap", "");
+            session.setAttribute("insertTech", "");
             /* Insert Into */
             switch (AngKapTech)
             {
 
                 case "Kapitaen":
-                    sqlstring = "insert into kapitän_istangestellter " +
-                            "values ('" + KapPatNr + "', " + seemeilen + ", " + currentUser + ")";
+                    if(ang) {
+                        sqlstring = "insert into kapitän_istangestellter " +
+                                "values ('" + KapPatNr + "', " + seemeilen + ", " + currentUser + ") on duplicate key" +
+                                " update Seemeilen ='" + seemeilen + "'";
+                        System.out.println(sqlstring);
+
+                        try {
+                            Class.forName("com.mysql.cj.jdbc.Driver");
+                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
+                            Statement stmt = con.createStatement();
+                            int rs = stmt.executeUpdate(sqlstring);
+                            con.close();
+                            session.setAttribute("insertKap", "Sie sind nun Kapitaen.");
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }else
+                    {
+                        session.setAttribute("insertKap", "Fehler Sie sind kein Angestellter");
+                    }
+                    break;
+                case "Techniker":
+                    if(ang){
+                    sqlstring = "insert into techniker_istangestellter " +
+                            "values ('" + LizNr + "', " + currentUser + ", " + Ausbild + ") on duplicate key" +
+                            " update Ausbildungsgrad ='" + Ausbild +"'";
                     System.out.println(sqlstring);
 
                     try{
@@ -105,10 +133,13 @@ public class PersonenServlet extends HttpServlet{
                         Statement stmt = con.createStatement();
                         int rs = stmt.executeUpdate(sqlstring);
                         con.close();
-
+                        session.setAttribute("insertTech", "Sie sind nun Techniker.");
                     }catch(Exception e){ System.out.println(e);}
-                    break;
-                case "Techniker":
+
+                    }else
+                    {
+                            session.setAttribute("insertTech", "Fehler Sie sind kein Angestellter.");
+                    }
                     break;
                 case "Angestellter":
                     sqlstring = "insert into gehaltskonto " +
@@ -122,7 +153,6 @@ public class PersonenServlet extends HttpServlet{
                         Statement stmt = con.createStatement();
                         int rs = stmt.executeUpdate(sqlstring);
                         con.close();
-
                     }catch(Exception e){ System.out.println(e);}
 
 
@@ -146,7 +176,7 @@ public class PersonenServlet extends HttpServlet{
                     break;
             }
 
-            dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
+            dispatcher = request.getRequestDispatcher("detailsForPerson_result.jsp");
         }
 
         dispatcher.forward(request, response);
