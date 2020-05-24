@@ -182,8 +182,8 @@
                 <tr>
                     <th align="center">
                     <br>
-                        <button id="btn-speichern" type="submit" value="Speichern" disabled>Speichern</button>
-                        <button id="btn-update" type="submit" value="Update" disabled>Update</button>
+                        <button id="btn-speichern" name="btn-speichern" type="submit" value="Speichern" disabled>Speichern</button>
+                        <button id="btn-update" name="btn-update" type="submit" value="Update" disabled>Update</button>
                     </th>
                 </tr>
                 </form>

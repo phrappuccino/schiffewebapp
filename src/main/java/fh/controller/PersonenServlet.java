@@ -55,7 +55,7 @@ public class PersonenServlet extends HttpServlet{
             dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
         }
 
-        if (request.getParameter("update") != null) {
+        if (request.getParameter("btn-update") != null) {
             //Get Parameter from page
             Long userID = Long.parseLong(request.getParameter("SVNR"));
             int BLZ = Integer.parseInt(request.getParameter("BLZ"));
@@ -72,19 +72,79 @@ public class PersonenServlet extends HttpServlet{
             dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
         }
 
-        if (request.getParameter("speichern") != null) {
+        if (request.getParameter("btn-speichern") != null) {
             //Get Parameter from Page
-            Long userID = Long.parseLong(request.getParameter("SVNR"));
-            int BLZ = Integer.parseInt(request.getParameter("BLZ"));
-            String AngKapTech = request.getParameter("capTech");
-            BigInteger KapPatNr = BigInteger.valueOf(Long.parseLong(request.getParameter("KapitaenspatentNummer")));
-            int seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
+            int BLZ = 0;
+            int seemeilen = 0;
+            BigInteger KapPatNr = BigInteger.valueOf(0);
+
+            if(!(request.getParameter("BLZ").isEmpty()))
+                BLZ = Integer.parseInt(request.getParameter("BLZ"));
+            if(!(request.getParameter("KapitaenspatentNummer").isEmpty()))
+                KapPatNr = BigInteger.valueOf(Long.parseLong(request.getParameter("KapitaenspatentNummer")));
+            if(!(request.getParameter("Seemeilen").isEmpty()))
+                seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
             String LizNr = request.getParameter("Lizenznummer");
             String Ausbild = request.getParameter("Ausbildungsgrad");
-
-            session.setAttribute("currentUser", userID);
-
+            String Kontonummer = request.getParameter("Kontonummer");
+            String AngKapTech = request.getParameter("capTech");
+            String currentUser = session.getAttribute("currentUser").toString();
+            String sqlstring = "";
             /* Insert Into */
+            switch (AngKapTech)
+            {
+
+                case "Kapitaen":
+                    sqlstring = "insert into kapitän_istangestellter " +
+                            "values ('" + KapPatNr + "', " + seemeilen + ", " + currentUser + ")";
+                    System.out.println(sqlstring);
+
+                    try{
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
+                        Statement stmt = con.createStatement();
+                        int rs = stmt.executeUpdate(sqlstring);
+                        con.close();
+
+                    }catch(Exception e){ System.out.println(e);}
+                    break;
+                case "Techniker":
+                    break;
+                case "Angestellter":
+                    sqlstring = "insert into gehaltskonto " +
+                            "values ('" + BLZ + "', '" + Kontonummer + "', " + 150 + ") on duplicate key" +
+                            " update BLZ = '" + BLZ + "' ,Kontonummer ='" + Kontonummer +"'";
+                    System.out.println(sqlstring);
+
+                    try{
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
+                        Statement stmt = con.createStatement();
+                        int rs = stmt.executeUpdate(sqlstring);
+                        con.close();
+
+                    }catch(Exception e){ System.out.println(e);}
+
+
+                    sqlstring = "insert into angestellter_istpersonmitgehaltskonto (SVNR, BLZ, Kontonummer)" +
+                            "values ('" + currentUser + "','" + BLZ + "', '" + Kontonummer + "') on duplicate key" +
+                            " update BLZ = '" + BLZ + "' ,Kontonummer ='" + Kontonummer +"'";
+
+
+                    System.out.println(sqlstring);
+
+                    try{
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
+                        Statement stmt = con.createStatement();
+                        int rs = stmt.executeUpdate(sqlstring);
+                        con.close();
+
+                    }catch(Exception e){ System.out.println(e);}
+                    break;
+                default:
+                    break;
+            }
 
             dispatcher = request.getRequestDispatcher("detailsForPerson.jsp");
         }
