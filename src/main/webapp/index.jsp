@@ -1,7 +1,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
@@ -13,12 +13,12 @@
 </head>
 <body>
 
-<%--<sql:setDataSource
-        driver="com.mysql.cj.jdbc.Driver"
-        url = "jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt"
-        user="root"
-        password=""
-/>--%>
+<%--//<sql:setDataSource
+//        driver="com.mysql.cj.jdbc.Driver"
+//        url = "jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt"
+//        user="root"
+//        password=""
+// />--%>
 <sql:setDataSource
         driver="oracle.jdbc.driver.OracleDriver"
         url="jdbc:oracle:thin:@localhost:1521:xe"
@@ -43,7 +43,7 @@
                     <th scope="col">Hausnummer</th>
                     <th scope="col">PLZ</th>
                     <th scope="col">Ort</th>
-<%--                    <th scope="col"></th>--%>
+<%--//                    <th scope="col"></th>--%>
                 </tr>
                 </thead>
                 <tbody>
