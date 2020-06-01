@@ -42,7 +42,7 @@
 <%--<h3><c:out value="${sessionScope.currentUser}"></c:out></h3>--%>
 
 <sql:query var="angestellt">
-    select gehaltskonto.Kontonummer AS Kontonummer, bank.Bankname AS Bankname, bank.BLZ AS BLZ from angestellter_istpersonmitgehaltskonto A JOIN gehaltskonto ON A.BLZ = gehaltskonto.BLZ and A.Kontonummer = gehaltskonto.Kontonummer JOIN bank ON A.BLZ = bank.BLZ where A.SVNR = <%=userID%>
+    select gehaltskonto.Kontonummer AS Kontonummer, bank.Bankname AS Bankname, bank.BLZ AS BLZ from angestellter_pmg A JOIN gehaltskonto ON A.BLZ = gehaltskonto.BLZ and A.Kontonummer = gehaltskonto.Kontonummer JOIN bank ON A.BLZ = bank.BLZ where A.SVNR = <%=userID%>
 </sql:query>
 
 <%--<h3><c:out value="${angestellt.rowCount}"/></h3>--%>
