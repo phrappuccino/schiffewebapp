@@ -13,11 +13,17 @@
 </head>
 <body>
 
-<sql:setDataSource
+<%--<sql:setDataSource
         driver="com.mysql.cj.jdbc.Driver"
         url = "jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt"
         user="root"
         password=""
+/>--%>
+<sql:setDataSource
+        driver="oracle.jdbc.driver.OracleDriver"
+        url="jdbc:oracle:thin:@localhost:1521:xe"
+        user="bic4a20_04"
+        password="guoXie4"
 />
 
 <sql:query var="personen">

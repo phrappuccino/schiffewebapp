@@ -28,7 +28,7 @@ CREATE TABLE Telefonnummer_hatPerson(
 
 
 CREATE TABLE Bank(
-                     BLZ INT(10)UNSIGNED,
+                     BLZ INT(10) UNSIGNED,
                      Bankname VARCHAR(30),
                      PRIMARY KEY(BLZ)
 );
