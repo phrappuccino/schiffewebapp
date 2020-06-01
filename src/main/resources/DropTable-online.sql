@@ -1,0 +1,17 @@
+DROP TABLE Kaptiän_fährt;
+DROP TABLE Passagier_buchtPassage;
+DROP TABLE Logbuch_leihe;
+DROP TABLE Techniker_wartet_Schiffstyp;
+DROP TABLE Logbuch;
+DROP TABLE Schiff_istSchiffstyp;
+DROP TABLE Schifftyp;
+DROP TABLE Passage;
+DROP TABLE Hersteller;
+DROP TABLE Passagier_istPerson;
+DROP TABLE Kapitän_istAngestellter;
+DROP TABLE Techniker_istAngestellter;
+DROP TABLE Angestellter_PMG;
+DROP TABLE Telefonnummer_hatPerson;
+DROP TABLE Gehaltskonto;
+DROP TABLE Bank;
+DROP TABLE Person;
