@@ -91,14 +91,17 @@
         </div>
     </div>
 </div>
+<main>
+    <c:set var = "save_jsp" scope = "session" value = "${save}"/>
+    <c:set var = "update_jsp" scope = "session" value = "${update}"/>
 
-    <c:if test="${save}">
+    <c:if test="${save_jsp = true}">
         <jsp:include page="save_pers.jsp" />
     </c:if>
-    <c:if test="${update}">
+    <c:if test="${update_jsp = true}">
         <jsp:include page="update_pers.jsp" />
     </c:if>
-
+</main>
 
 
 <jsp:include page="../footer.jsp"/>
