@@ -17,7 +17,7 @@
 
 <head>
 
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="../header.jsp"/>
     <title>Details for Person</title>
 </head>
 
@@ -206,7 +206,7 @@
         </div>
     </div>
 </div>
-<jsp:include page="footer.jsp"/>
+<jsp:include page="../footer.jsp"/>
 <script>
     $(document).ready(function(){
         if(document.getElementById("bool_Kap").value == 1){

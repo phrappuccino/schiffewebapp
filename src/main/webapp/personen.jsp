@@ -76,7 +76,7 @@
                             <a class="btn btn-primary" href="telenr.jsp?currentUser=${person.SVNR}">TeleNr</a>
                         </th>
                         <th>
-                            <form method="post" action="personen">
+                            <form method="post" action="./person/detailsForPerson.jsp">
                                 <button class="btn btn-upgrade" type="submit" name="upgrade" value="<c:out value="${person.SVNR}"/>">
                                     Details-Person
                                 </button>
