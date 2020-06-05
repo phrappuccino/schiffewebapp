@@ -12,7 +12,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
-
+<%@ page import = "java.util.Map" %>
 <html>
 
 <head>
@@ -34,7 +34,10 @@
         user="bic4a20_04"
         password="guoXie4"
 />
-<%String userID = session.getAttribute("currentUser").toString();%>
+
+<%
+    String userID = request.getParameter("upgrade");
+%>
 
 <sql:query var="banken">
     select * from bank
@@ -57,7 +60,7 @@
             <table class="table">
 
 
-                <form method="post" action="personen">
+                <form method="post" action="detailsForPerson_result.jsp">
                     <tr>
                         <th>
                             <label for="SVNR">SVNR uebernommen:</label>

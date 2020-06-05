@@ -71,14 +71,14 @@
                                 <c:out value="${person.Ort}"/>
                             </th>
                             <th>
-                                <form method="post" action="personen">
+                                <form method="post" action="detailsForPerson.jsp">
                                     <button class="btn btn-danger" type="submit" name="gotel" value="<c:out value="${person.SVNR}"/>">
                                         Tele
                                     </button>
                                 </form>
                             </th>
                             <th>
-                                <form method="post" action="personen">
+                                <form method="post" action="detailsForPerson.jsp">
                                     <button class="btn btn-upgrade" type="submit" name="upgrade" value="<c:out value="${person.SVNR}"/>">
                                         Details-Person
                                     </button>

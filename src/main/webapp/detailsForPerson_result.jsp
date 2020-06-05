@@ -19,11 +19,13 @@
     <title>Results</title>
 </head>
 <body>
-<%
-    String userID = session.getAttribute("currentUser").toString();
-    String insertKap = session.getAttribute("insertKap").toString();
-    String insertTech = session.getAttribute("insertTech").toString();
-%>
+
+<c:forEach var="par" items="${paramValues}">
+    <c:if test="${fn:startsWith(par.key, 'token')}">
+        ${par.key} = ${par.value[0]};
+    </c:if>
+</c:forEach>
+
 
 <div class = "container">
     <div class="row">
