@@ -197,8 +197,8 @@
                 <tr>
                     <th align="center">
                     <br>
-                        <button id="btn-speichern" name="btn-speichern" type="submit" value="Speichern" disabled>Speichern</button>
-                        <button id="btn-update" name="btn-update" type="submit" value="Update" disabled>Update</button>
+                        <button id="btn-speichern" name="btn-speichern" type="submit" href="save_pers.jsp" disabled>Speichern</button>
+                        <button id="btn-update" name="btn-update" type="submit" href="update_pers.jsp" disabled>Update</button>
                     </th>
                 </tr>
                 </form>
