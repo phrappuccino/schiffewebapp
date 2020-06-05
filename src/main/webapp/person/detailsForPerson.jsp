@@ -60,7 +60,7 @@
             <table class="table">
 
 
-                <form method="post">
+                <form method="post" action="detailsForPerson_result.jsp">
                     <tr>
                         <th>
                             <label for="SVNR">SVNR uebernommen:</label>
@@ -197,8 +197,8 @@
                 <tr>
                     <th align="center">
                     <br>
-                        <button id="btn-speichern" name="btn-speichern" href="save_pers.jsp" disabled>Speichern</button>
-                        <button id="btn-update" name="btn-update" href="update_pers.jsp" disabled>Update</button>
+                        <button id="btn-speichern" name="btn-speichern" type="submit" disabled>Speichern</button>
+                        <button id="btn-update" name="btn-update" type="submit" disabled>Update</button>
                     </th>
                 </tr>
                 </form>

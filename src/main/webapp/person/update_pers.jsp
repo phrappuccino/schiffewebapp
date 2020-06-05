@@ -7,14 +7,8 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import = "java.util.Map" %>
 
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<div id="update">
 <%
 
 %>
-
-</body>
-</html>
+</div>

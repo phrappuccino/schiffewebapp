@@ -7,12 +7,7 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import = "java.util.Map" %>
 
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
+<div id="insert">
 <%
     //Get Parameter from Page
     int BLZ = 0;
@@ -21,28 +16,18 @@
     String KapPatNr = "";
 
 
-    if (Integer.parseInt(request.getParameter("bool_Ang")) > 0){
-        ang = true;
-        System.out.println(request.getParameter("bool_Ang"));
-        System.out.println(request.getParameter("Bankleitzahl").toString());
-        BLZ = Integer.parseInt(request.getParameter("Bankleitzahl"));
-    }else {
-        ang = false;
-    }
-
-    if(!(request.getParameter("KapitaenspatentNummer").isEmpty()))
-        KapPatNr = request.getParameter("KapitaenspatentNummer");
-    if(!(request.getParameter("Seemeilen").isEmpty()))
-        seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
-
-    String LizNr = request.getParameter("Lizenznummer");
-    String Ausbild = request.getParameter("Ausbildungsgrad");
-    String Kontonummer = request.getParameter("Kontonummer");
-    String AngKapTech = request.getParameter("capTech");
-    String currentUser = session.getAttribute("currentUser").toString();
+    ang =Boolean.parseBoolean(session.getAttribute("ang").toString());
+    BLZ =Integer.parseInt(session.getAttribute("BLZ").toString());
+    KapPatNr = session.getAttribute("KapPatNr").toString();
+    seemeilen =Integer.parseInt(session.getAttribute("seemeilen").toString());
+    String LizNr = session.getAttribute("Lizenznummer").toString();
+    String Ausbild = session.getAttribute("Ausbild").toString();
+    String Kontonummer =session.getAttribute("Kontonummer").toString();
+    String AngKapTech =session.getAttribute("AngKapTech").toString();
+    String currentUser =session.getAttribute("currentUser").toString();
     String sqlstring = "";
-    session.setAttribute("insertKap", "");
-    session.setAttribute("insertTech", "");
+
+
     /* Insert Into */
     switch (AngKapTech) {
 
@@ -131,7 +116,7 @@
             }
 
 
-            sqlstring = "insert into angestellter_istpersonmitgehaltskonto (SVNR, BLZ, Kontonummer)" +
+            sqlstring = "insert into angestellter_pmg (SVNR, BLZ, Kontonummer)" +
                     "values ('" + currentUser + "','" + BLZ + "', '" + Kontonummer + "') on duplicate key" +
                     " update BLZ = '" + BLZ + "' ,Kontonummer ='" + Kontonummer + "'";
 
@@ -159,5 +144,4 @@
             break;
     }
 %>
-</body>
-</html>
+</div>
