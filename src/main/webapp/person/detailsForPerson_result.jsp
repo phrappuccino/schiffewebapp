@@ -72,13 +72,13 @@
                 <form method="post" action="personen">
                     <tr>
                         <th>
-                            <label for="SVNR">SVNR uebernommen:</label>
-                            <input type="text" id="SVNR" name="SVNR" disabled="true" maxlength="50" value="<%=userID%>">
+<%--                            <label for="SVNR">SVNR uebernommen:</label>--%>
+<%--                            <input type="text" id="SVNR" name="SVNR" disabled="true" maxlength="50" value="<%=userID%>">--%>
                         </th>
                     </tr>
                     <tr>
                         <th>
-                            <label><%=userID%></label>
+<%--                           <label><%=userID%></label>--%>
                             <label><%=insertKap%></label>
                             <label><%=insertTech%></label>
                             <button id="btn-ok" name="btn-ok" type="submit" value="Ok">Ok</button>
@@ -91,17 +91,17 @@
         </div>
     </div>
 </div>
-<main>
+
     <c:set var = "save_jsp" scope = "session" value = "${save}"/>
     <c:set var = "update_jsp" scope = "session" value = "${update}"/>
 
     <c:if test="${save_jsp = true}">
-        <jsp:include page="save_pers.jsp" />
+        <jsp page="save_pers.jsp" />
     </c:if>
     <c:if test="${update_jsp = true}">
-        <jsp:include page="update_pers.jsp" />
+        <jsp page="update_pers.jsp" />
     </c:if>
-</main>
+
 
 
 <jsp:include page="../footer.jsp"/>
