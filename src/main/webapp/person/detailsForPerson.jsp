@@ -64,7 +64,8 @@
                     <tr>
                         <th>
                             <label for="SVNR">SVNR uebernommen:</label>
-                            <input type="text" id="SVNR" name="SVNR" disabled="true" maxlength="50" value="<%=userID%>">
+                            <input type="hidden" id="SVNR" name="SVNR" maxlength="50" value="<%=userID%>">
+                            <input type="text" id="SVNR-dummy" name="SVNR-dummy" disabled="true" value="<%=userID%>">
                         </th>
                     </tr>
                     <tr>
