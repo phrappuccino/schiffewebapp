@@ -1,3 +1,8 @@
+DROP SEQUENCE seqTypSchiff;
+DROP SEQUENCE seqAng;
+DROP SEQUENCE seqInvSchiff;
+DROP SEQUENCE seqLog;
+
 DROP TABLE Kaptiän_fährt;
 DROP TABLE Passagier_buchtPassage;
 DROP TABLE Logbuch_leihe;

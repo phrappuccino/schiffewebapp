@@ -47,8 +47,9 @@ CREATE TABLE Gehaltskonto(
                              FOREIGN KEY (BLZ) REFERENCES Bank(BLZ)
 );
 
+
 CREATE TABLE Angestellter_PMG (
-                                                       Angestelltennummer INT  NOT NULL ,
+                                                       Angestelltennummer INT NOT NULL,
                                                        SVNR VARCHAR(15) ,
                                                        BLZ INT  NOT NULL,
                                                        Kontonummer VARCHAR(30) NOT NULL,
@@ -68,7 +69,7 @@ CREATE TABLE Techniker_istAngestellter (
 
 
 CREATE TABLE Kapitän_istAngestellter (
-                                         KapitänspatentNummer INT   NOT NULL,
+                                         KapitänspatentNummer INT NOT NULL,
                                          Seemeilen INT ,
                                          SVNR VARCHAR(15) ,
                                          PRIMARY KEY(SVNR),
@@ -101,9 +102,8 @@ CREATE TABLE Techniker_wartet_Schiffstyp (
                                              FOREIGN KEY (SVNR) REFERENCES Techniker_istAngestellter(SVNR)
 );
 
-
 CREATE TABLE Schiff_istSchiffstyp (
-                                      Inventarnummer INT  ,
+                                      Inventarnummer INT,
                                       Typennummer INT  NOT NULL,
                                       Fertigungsjahr TIMESTAMP,
                                       Seemeilen INT ,
@@ -112,7 +112,7 @@ CREATE TABLE Schiff_istSchiffstyp (
 );
 
 CREATE TABLE Logbuch (
-                         Logbuchcode INT ,
+                         Logbuchcode INT,
                          Inventarnummer INT ,
                          PRIMARY KEY(Inventarnummer, Logbuchcode),
                          FOREIGN KEY (Inventarnummer) REFERENCES Schiff_istSchiffstyp(Inventarnummer)
@@ -281,23 +281,23 @@ VALUES(19250,'AT201947039894359143',7728);
 
 
 INSERT INTO Angestellter_PMG
-VALUES(1, 081510051987, 19470,'AT022050302101023600');
+VALUES(seqAng.nextval, 081510051987, 19470,'AT022050302101023600');
 INSERT INTO Angestellter_PMG
-VALUES(2, 084410121984, 19360,'AT401400015379681766');
+VALUES(seqAng.nextval, 084410121984, 19360,'AT401400015379681766');
 INSERT INTO Angestellter_PMG
-VALUES(3, 111510051980, 14000,'AT725400015414338334');
+VALUES(seqAng.nextval, 111510051980, 14000,'AT725400015414338334');
 INSERT INTO Angestellter_PMG
-VALUES(4, 250610081981, 14000,'AT165400089737493781');
+VALUES(seqAng.nextval, 250610081981, 14000,'AT165400089737493781');
 INSERT INTO Angestellter_PMG
-VALUES(5, 051510111983, 12000,'AT503621878638875447');
+VALUES(seqAng.nextval, 051510111983, 12000,'AT503621878638875447');
 INSERT INTO Angestellter_PMG
-VALUES(6, 991510041986, 12000,'AT215400038718322987');
+VALUES(seqAng.nextval, 991510041986, 12000,'AT215400038718322987');
 INSERT INTO Angestellter_PMG
-VALUES(7, 141510071983, 20241,'AT911100017838219533');
+VALUES(seqAng.nextval, 141510071983, 20241,'AT911100017838219533');
 INSERT INTO Angestellter_PMG
-VALUES(8, 081510011983, 19970,'AT363621899451872759');
+VALUES(seqAng.nextval, 081510011983, 19970,'AT363621899451872759');
 INSERT INTO Angestellter_PMG
-VALUES(9, 771510021975, 19250,'AT201947039894359143');
+VALUES(seqAng.nextval, 771510021975, 19250,'AT201947039894359143');
 
 
 
@@ -334,11 +334,11 @@ VALUES (151929051998,8);
 
 
 INSERT INTO Schifftyp
-VALUES (1, 'A. C. BOOTWERFT GesmbH', 'Kreuzfahrtschiff',228081,700);
+VALUES (seqTypSchiff, 'A. C. BOOTWERFT GesmbH', 'Kreuzfahrtschiff',228081,700);
 INSERT INTO Schifftyp
-VALUES (2, 'GEB GLASTIC BOOTSBAU und HANDEL', 'Passagierschiff', 90700,450);
+VALUES (seqTypSchiff, 'GEB GLASTIC BOOTSBAU und HANDEL', 'Passagierschiff', 90700,450);
 INSERT INTO Schifftyp
-VALUES (3, 'HOLIDAY-Yachting GesmbH', 'Kombischiff', 54282,150);
+VALUES (seqTypSchiff, 'HOLIDAY-Yachting GesmbH', 'Kombischiff', 54282,150);
 
 
 INSERT INTO Techniker_wartet_Schiffstyp
@@ -349,25 +349,25 @@ INSERT INTO Techniker_wartet_Schiffstyp
 VALUES (3,991510041986);
 
 INSERT INTO Schiff_istSchiffstyp
-VALUES (1, 1, TO_TIMESTAMP('2007','YYYY'), 234232);
+VALUES (seqInvSchiff.nextval, 1, TO_TIMESTAMP('2007','YYYY'), 234232);
 INSERT INTO Schiff_istSchiffstyp
-VALUES (2, 1, TO_TIMESTAMP('1997','YYYY'), 534212);
+VALUES (seqInvSchiff.nextval, 1, TO_TIMESTAMP('1997','YYYY'), 534212);
 INSERT INTO Schiff_istSchiffstyp
-VALUES (3, 2, TO_TIMESTAMP('2017','YYYY'), 2232);
+VALUES (seqInvSchiff.nextval, 2, TO_TIMESTAMP('2017','YYYY'), 2232);
 INSERT INTO Schiff_istSchiffstyp
-VALUES (4, 3, TO_TIMESTAMP('1999','YYYY'), 434222);
+VALUES (seqInvSchiff.nextval, 3, TO_TIMESTAMP('1999','YYYY'), 434222);
 INSERT INTO Schiff_istSchiffstyp
-VALUES (5, 1, TO_TIMESTAMP('2012','YYYY'), 23220);
+VALUES (seqInvSchiff.nextval, 1, TO_TIMESTAMP('2012','YYYY'), 23220);
 INSERT INTO Schiff_istSchiffstyp
-VALUES (6, 3, TO_TIMESTAMP('2010','YYYY'), 22312);
+VALUES (seqInvSchiff.nextval, 3, TO_TIMESTAMP('2010','YYYY'), 22312);
 
 
 INSERT INTO Logbuch
-VALUES (1,1);
+VALUES (seqLog.nextval,1);
 INSERT INTO Logbuch
-VALUES (2,2);
+VALUES (seqLog.nextval,2);
 INSERT INTO Logbuch
-VALUES (3,3);
+VALUES (seqLog.nextval,3);
 
 
 INSERT INTO Logbuch_leihe
