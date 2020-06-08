@@ -24,8 +24,8 @@
     BLZ =Integer.parseInt(session.getAttribute("BLZ").toString());
 
     seemeilen =Integer.parseInt(session.getAttribute("seemeilen").toString());
-    if(session.getAttribute("Lizenznummer") != null) {
-        LizNr = session.getAttribute("Lizenznummer").toString();
+    if(session.getAttribute("LizNr") != null) {
+        LizNr = session.getAttribute("LizNr").toString();
     }
     if(session.getAttribute("Ausbild")!= null) {
         Ausbild = session.getAttribute("Ausbild").toString();
@@ -51,8 +51,7 @@
         case 1:
             if (ang) {
                 sqlstring = "insert into kapitän_istangestellter " +
-                        "values ('" + KapPatNr + "', " + seemeilen + ", " + currentUser + ") on duplicate key" +
-                        " update Seemeilen ='" + seemeilen + "'";
+                        "values ('" + KapPatNr + "', " + seemeilen + ", " + currentUser + ")";
                 session.setAttribute("debug",sqlstring);
                 try {
 //                            Class.forName("com.mysql.cj.jdbc.Driver");
@@ -81,8 +80,7 @@
         case 2:
             if (ang) {
                 sqlstring = "insert into techniker_istangestellter " +
-                        "values ('" + LizNr + "', " + currentUser + ", " + Ausbild + ") on duplicate key" +
-                        " update Ausbildungsgrad ='" + Ausbild + "'";
+                        "values ('" + LizNr + "', " + currentUser + ", " + Ausbild + ")";
                 session.setAttribute("debug",sqlstring);
 
                 try {
@@ -112,8 +110,7 @@
         //Angestellter = 3
         case 3:
             sqlstring = "insert into gehaltskonto " +
-                    "values ('" + BLZ + "', '" + Kontonummer + "', " + 150 + ") on duplicate key" +
-                    " update BLZ = '" + BLZ + "' ,Kontonummer ='" + Kontonummer + "'";
+                    "values ('" + BLZ + "', '" + Kontonummer + "', " + 150 + ")";
             session.setAttribute("debug",sqlstring);
 
             try {
@@ -136,8 +133,7 @@
 
 
             sqlstring = "insert into angestellter_pmg (SVNR, BLZ, Kontonummer)" +
-                    "values ('" + currentUser + "','" + BLZ + "', '" + Kontonummer + "') on duplicate key" +
-                    " update BLZ = '" + BLZ + "' ,Kontonummer ='" + Kontonummer + "'";
+                    "values ('" + currentUser + "','" + BLZ + "', '" + Kontonummer + "')";
 
 
             session.setAttribute("debug",sqlstring);
@@ -163,6 +159,7 @@
             break;
     }
 %>
-    <c:out value='${sessionScope.currentUser}' />
-    <c:out value='${sessionScope.debug}' />
+<%--    <c:out value='${sessionScope.currentUser}' />--%>
+<%--    <br>--%>
+<%--    <c:out value='${sessionScope.debug}' />--%>
 </div>

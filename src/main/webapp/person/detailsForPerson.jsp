@@ -60,7 +60,7 @@
             <table class="table">
 
 
-                <form method="get" action="detailsForPerson_result.jsp">
+                <form method="post" action="detailsForPerson_result.jsp">
                     <tr>
                         <th>
                             <label for="SVNR">SVNR uebernommen:</label>

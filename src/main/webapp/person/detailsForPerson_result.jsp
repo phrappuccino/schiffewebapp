@@ -66,7 +66,7 @@
 
     session.setAttribute( "Kontonummer", request.getParameter("Kontonummer"));
     session.setAttribute( "AngKapTech", request.getParameter("capTech"));
-    session.setAttribute( "currentUser", request.getAttribute("SVNR"));
+    session.setAttribute( "currentUser", request.getParameter("SVNR"));
 
     if(request.getParameterMap().containsKey("btn-speichern")){
         save = true;
@@ -90,7 +90,7 @@
             <table class="table">
 
 
-                <form method="post" action="personen">
+
                     <tr>
                         <th>
 <%--                            <label for="SVNR">SVNR uebernommen:</label>--%>
@@ -124,13 +124,13 @@
                             <button id="btn-ok" name="btn-ok" href="./index.jsp" value="Ok">Ok</button>
                         </th>
                     </tr>
-                </form>
+
 
 
             </table>
 
 
-            <c:out value='${sessionScope.currentUser}' />
+<%--            <c:out value='${sessionScope.currentUser}' />--%>
 
 
 
