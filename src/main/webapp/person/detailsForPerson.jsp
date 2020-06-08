@@ -151,23 +151,27 @@
                     <c:choose>
                     <c:when test="${((kapitaen.rowCount > 0) or (techniker.rowCount > 0))}">
                         <c:if test="${(kapitaen.rowCount > 0)}">
+                            <div id="Kapitaen" style="display: none">
+                                    <c:forEach var="kap" items="${kapitaen.rows}">
+                                        <label for="KapitaenspatentNummer">Nummer des Kapitaenspatentes:</label>
+                                        <input type="Text" id="KapitaenspatentNummer" name="KapitaenspatentNummer" value="<c:out value="${kap.KapitänspatentNummer}"/>"maxlength="255"/>
+                                        <label for="Seemeilen">Gefahrene Seemeilen:</label>
+                                        <input type="Text" id="Seemeilen" name="Seemeilen" value="<c:out value="${kap.Seemeilen}"/>"/>
+                                    </c:forEach>
+                            </div>
+                        </c:if>
 
-                                <c:forEach var="kap" items="${kapitaen.rows}">
-                                    <label for="KapitaenspatentNummer">Nummer des Kapitaenspatentes:</label>
-                                    <input type="Text" id="KapitaenspatentNummer" name="KapitaenspatentNummer" value="<c:out value="${kap.KapitänspatentNummer}"/>"maxlength="255"/>
-                                    <label for="Seemeilen">Gefahrene Seemeilen:</label>
-                                    <input type="Text" id="Seemeilen" name="Seemeilen" value="<c:out value="${kap.Seemeilen}"/>"/>
+                            <c:if test="${(techniker.rowCount > 0)}">
+                                <div id="Techniker" style="display: none">
+                                <c:forEach var="tec" items="${techniker.rows}">
+                                    <label for="Lizenznummer">Techniker Lizenznummer:</label>
+                                    <input type="Text" id="Lizenznummer" name="Lizenznummer" value="<c:out value="${tec.Lizenznummer}"/> "maxlength="255"/>
+                                    <label for="Ausbildungsgrad">Ausbildungsgrad:</label>
+                                    <input type="Text" id="Ausbildungsgrad" name="Ausbildungsgrad" value="<c:out value="${tec.Ausbildungsgrad}"/> "maxlength="255"/>
                                 </c:forEach>
+                                </div>
+                            </c:if>
 
-                        </c:if>
-                        <c:if test="${(techniker.rowCount > 0)}">
-                            <c:forEach var="tec" items="${techniker.rows}">
-                                <label for="Lizenznummer">Techniker Lizenznummer:</label>
-                                <input type="Text" id="Lizenznummer" name="Lizenznummer" value="<c:out value="${tec.Lizenznummer}"/> "maxlength="255"/>
-                                <label for="Ausbildungsgrad">Ausbildungsgrad:</label>
-                                <input type="Text" id="Ausbildungsgrad" name="Ausbildungsgrad" value="<c:out value="${tec.Ausbildungsgrad}"/> "maxlength="255"/>
-                            </c:forEach>
-                        </c:if>
 
                     </c:when>
                     <c:otherwise>
@@ -225,14 +229,12 @@
         function toggler(inputValue) {
             switch(inputValue) {
                 case "Techniker":
-                    document.getElementById("Kapitaen").style.display = "none";
                     document.getElementById("Techniker").style.display = "inline";
                     document.getElementById("blzNr").style.display = "none";
                     document.getElementById("KntNr").style.display = "none";
                     break;
                 case "Kapitaen":
                     document.getElementById("Kapitaen").style.display = "inline";
-                    document.getElementById("Techniker").style.display = "none";
                     document.getElementById("blzNr").style.display = "none";
                     document.getElementById("KntNr").style.display = "none";
                     break;
@@ -251,15 +253,15 @@
         function changeButton(inputValue) {
             switch (inputValue) {
                 case "Angestellter":
-                    document.getElementById("rdAngestellter").setAttribute("checked", "checked");
+                    //document.getElementById("rdAngestellter").setAttribute("checked", "checked");
                     changerForButtons("bool_Ang");
                     break;
                 case "Techniker":
-                    document.getElementById("rdTechniker").setAttribute("checked", "checked");
+                    //document.getElementById("rdTechniker").setAttribute("checked", "checked");
                     changerForButtons("bool_Tech");
                     break;
                 case "Kapitaen":
-                    document.getElementById("rdKapitaen").setAttribute("checked", "checked");
+                    //document.getElementById("rdKapitaen").setAttribute("checked", "checked");
                     changerForButtons("bool_Kap");
                     break;
                 default:
