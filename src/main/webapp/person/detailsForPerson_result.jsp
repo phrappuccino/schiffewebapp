@@ -8,10 +8,12 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import = "java.util.Map" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 
 <html>
 <head>
@@ -26,33 +28,52 @@
     int seemeilen = 0;
     boolean ang = false;
     String KapPatNr = "";
+    String LizNr = "";
+    String Ausbildungsgrad = "";
     boolean save = false;
     boolean update = false;
 
 
     if (Integer.parseInt(request.getParameter("bool_Ang")) > 0){
+        session.setAttribute("ang", true);
         ang = true;
         System.out.println(request.getParameter("bool_Ang"));
         System.out.println(request.getParameter("Bankleitzahl").toString());
         BLZ = Integer.parseInt(request.getParameter("Bankleitzahl"));
+        session.setAttribute("BLZ", BLZ);
     }else {
+        session.setAttribute("ang", false);
         ang = false;
     }
 
-    if(!(request.getParameter("KapitaenspatentNummer").isEmpty()))
+    if(!(request.getParameter("KapitaenspatentNummer").isEmpty())) {
         KapPatNr = request.getParameter("KapitaenspatentNummer");
-    if(!(request.getParameter("Seemeilen").isEmpty()))
+    }
+    if(!(request.getParameter("Seemeilen").isEmpty())) {
         seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
+    }
+    if(!(request.getParameter("Lizenznummer").isEmpty())) {
+        LizNr = request.getParameter("Lizenznummer");
+    }
+    if(!(request.getParameter("Ausbildungsgrad").isEmpty())) {
+        Ausbildungsgrad = request.getParameter("Ausbildungsgrad");
+    }
 
-    session.setAttribute( "LizNr", request.getParameter("Lizenznummer"));
-    session.setAttribute( "Ausbild", request.getParameter("Ausbildungsgrad"));
+    session.setAttribute( "LizNr", LizNr);
+    session.setAttribute("KapPatNr", KapPatNr);
+    session.setAttribute("seemeilen", seemeilen);
+    session.setAttribute( "Ausbild", Ausbildungsgrad);
+
     session.setAttribute( "Kontonummer", request.getParameter("Kontonummer"));
     session.setAttribute( "AngKapTech", request.getParameter("capTech"));
     session.setAttribute( "currentUser", request.getAttribute("currentUser"));
 
-    if(Integer.parseInt(request.getParameter("btn_speichern").toString())>0) save = true;
-    if(Integer.parseInt(request.getParameter("btn_update").toString())>0) update = true;
-
+    if(request.getParameterMap().containsKey("btn-speichern")){
+        save = true;
+    }
+    if(request.getParameterMap().containsKey("btn-update")) {
+        update = true;
+    }
 
     session.setAttribute("insertKap", "");
     session.setAttribute("insertTech", "");
@@ -79,8 +100,27 @@
                     <tr>
                         <th>
 <%--                           <label><%=userID%></label>--%>
-                            <label><%=insertKap%></label>
-                            <label><%=insertTech%></label>
+<%--                            <label><%=insertKap%></label>--%>
+
+
+                                <%if(save){%>
+                                    <jsp:include page="save_pers.jsp" />
+                                <% }%>
+                                <%if(update){%>
+                                    <jsp:include page="update_pers.jsp" />
+                                <% }%>
+
+<%--                            <c:out value="${salary}" />--%>
+<%--                            <label><%=insertTech%></label>--%>
+<%--                            <c:if test='${save}'>--%>
+<%--                                <c:out value="save" />--%>
+<%--                                --%>
+<%--                            </c:if>--%>
+<%--                            <c:if test='${update}'>--%>
+<%--                                <c:out value="update"/>--%>
+<%--                                --%>
+<%--                            </c:if>--%>
+
                             <button id="btn-ok" name="btn-ok" type="submit" value="Ok">Ok</button>
                         </th>
                     </tr>
@@ -88,19 +128,17 @@
 
 
             </table>
+
+
+
+
+
+
         </div>
     </div>
 </div>
 
-    <c:set var = "save_jsp" scope = "session" value = "${save}"/>
-    <c:set var = "update_jsp" scope = "session" value = "${update}"/>
 
-    <c:if test="${save_jsp = true}">
-        <jsp page="save_pers.jsp" />
-    </c:if>
-    <c:if test="${update_jsp = true}">
-        <jsp page="update_pers.jsp" />
-    </c:if>
 
 
 

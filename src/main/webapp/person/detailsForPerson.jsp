@@ -60,7 +60,7 @@
             <table class="table">
 
 
-                <form method="post" action="detailsForPerson_result.jsp">
+                <form method="get" action="detailsForPerson_result.jsp">
                     <tr>
                         <th>
                             <label for="SVNR">SVNR uebernommen:</label>
@@ -171,11 +171,11 @@
                     </c:when>
                     <c:otherwise>
                         <label for="capTech">Angestellter Techniker oder Kapitaen:</label>
-                        <input type="radio" id="rdAngestellter" onclick="javascript:toggler('Angestellter')" name="capTech" value="Angestellter"/>
+                        <input type="radio" id="rdAngestellter" onclick="javascript:toggler('Angestellter')" name="capTech" value="3"/>
                         <label for="Angestellter">Angestellter</label>
-                        <input type="radio" id="rdTechniker" onclick="javascript:toggler('Techniker')"  name="capTech" value="Techniker"/>
+                        <input type="radio" id="rdTechniker" onclick="javascript:toggler('Techniker')"  name="capTech" value="2"/>
                         <label for="Techniker">Techniker</label>
-                        <input type="radio" id="rdKapitaen" onclick="javascript:toggler('Kapitaen')"  name="capTech" value="Kapitaen"/>
+                        <input type="radio" id="rdKapitaen" onclick="javascript:toggler('Kapitaen')"  name="capTech" value="1"/>
                         <label for="Kapitaen">Kapitaen</label>
                         <br>
                         <div id="Techniker" style="display: none">
@@ -197,8 +197,8 @@
                 <tr>
                     <th align="center">
                     <br>
-                        <button id="btn-speichern" name="btn-speichern" type="submit" disabled>Speichern</button>
-                        <button id="btn-update" name="btn-update" type="submit" disabled>Update</button>
+                        <button id="btn-speichern" name="btn-speichern" value="btn-speichern" type="submit" hidden="true">Speichern</button>
+                        <button id="btn-update" name="btn-update" value="btn-update" type="submit" hidden="true">Update</button>
                     </th>
                 </tr>
                 </form>
@@ -268,11 +268,11 @@
         }
         function changerForButtons(boolValue){
             if(document.getElementById(boolValue).value == 1){
-                document.getElementById("btn-speichern").setAttribute("disabled", "disbaled");
-                document.getElementById("btn-update").removeAttribute("disabled");
+                document.getElementById("btn-speichern").setAttribute("hidden", "true");
+                document.getElementById("btn-update").removeAttribute("hidden");
             }else {
-                document.getElementById("btn-speichern").removeAttribute("disabled");
-                document.getElementById("btn-update").setAttribute("disabled", "disabled");
+                document.getElementById("btn-speichern").removeAttribute("hidden");
+                document.getElementById("btn-update").setAttribute("hidden", "true");
             }
         }
 

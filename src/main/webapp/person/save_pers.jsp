@@ -18,20 +18,23 @@
 
     ang =Boolean.parseBoolean(session.getAttribute("ang").toString());
     BLZ =Integer.parseInt(session.getAttribute("BLZ").toString());
-    KapPatNr = session.getAttribute("KapPatNr").toString();
+
     seemeilen =Integer.parseInt(session.getAttribute("seemeilen").toString());
     String LizNr = session.getAttribute("Lizenznummer").toString();
     String Ausbild = session.getAttribute("Ausbild").toString();
     String Kontonummer =session.getAttribute("Kontonummer").toString();
-    String AngKapTech =session.getAttribute("AngKapTech").toString();
+    Integer AngKapTech =Integer.parseInt(session.getAttribute("AngKapTech").toString());
     String currentUser =session.getAttribute("currentUser").toString();
+
+
+    KapPatNr = session.getAttribute("KapPatNr").toString();
     String sqlstring = "";
 
 
     /* Insert Into */
     switch (AngKapTech) {
-
-        case "Kapitaen":
+        //Kapitaen = 1
+        case 1:
             if (ang) {
                 sqlstring = "insert into kapitän_istangestellter " +
                         "values ('" + KapPatNr + "', " + seemeilen + ", " + currentUser + ") on duplicate key" +
@@ -61,7 +64,8 @@
                 session.setAttribute("insertKap", "Fehler Sie sind kein Angestellter");
             }
             break;
-        case "Techniker":
+        //Techniker = 2
+        case 2:
             if (ang) {
                 sqlstring = "insert into techniker_istangestellter " +
                         "values ('" + LizNr + "', " + currentUser + ", " + Ausbild + ") on duplicate key" +
@@ -91,7 +95,9 @@
                 session.setAttribute("insertTech", "Fehler Sie sind kein Angestellter.");
             }
             break;
-        case "Angestellter":
+
+        //Angestellter = 3
+        case 3:
             sqlstring = "insert into gehaltskonto " +
                     "values ('" + BLZ + "', '" + Kontonummer + "', " + 150 + ") on duplicate key" +
                     " update BLZ = '" + BLZ + "' ,Kontonummer ='" + Kontonummer + "'";

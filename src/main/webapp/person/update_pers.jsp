@@ -8,6 +8,7 @@
 <%@ page import = "java.util.Map" %>
 
 <div id="update">
+    <h3>Update</h3>
 <%
 
 %>
