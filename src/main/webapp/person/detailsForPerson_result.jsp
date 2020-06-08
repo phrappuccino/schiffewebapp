@@ -34,65 +34,76 @@
     boolean update = false;
     int capTechUpdate = 0;
 
-    if (Integer.parseInt(request.getParameter("bool_Ang")) > 0){
-        session.setAttribute("ang", true);
-        ang = true;
-        System.out.println(request.getParameter("bool_Ang"));
-        System.out.println(request.getParameter("Bankleitzahl").toString());
-        BLZ = Integer.parseInt(request.getParameter("Bankleitzahl"));
-        session.setAttribute("BLZ", BLZ);
-    }else {
-        session.setAttribute("ang", false);
-        ang = false;
-    }
 
-    if(request.getParameterMap().containsKey("KapitaenspatentNummer")) {
-        if(!(request.getParameter("KapitaenspatentNummer").isEmpty())) {
-            KapPatNr = request.getParameter("KapitaenspatentNummer");
+    if(request.getParameterMap().containsKey("capTech")) {
+        session.setAttribute("AngKapTech", request.getParameter("capTech"));
+
+
+        if (request.getParameterMap().containsKey("Bankleitzahl") && request.getParameterMap().containsKey("Kontonummer")) {
+            BLZ = Integer.parseInt(request.getParameter("Bankleitzahl"));
+            session.setAttribute("BLZ", BLZ);
+            session.setAttribute("Kontonummer", request.getParameter("Kontonummer"));
+            ang = true;
         }
-    }
-    if(request.getParameterMap().containsKey("Seemeilen")) {
+
+        if (Integer.parseInt(request.getParameter("bool_Ang")) > 0) {
+            session.setAttribute("ang", true);
+            ang = true;
+        } else {
+            session.setAttribute("ang", false);
+            ang = false;
+        }
+
+
+        if (request.getParameterMap().containsKey("KapitaenspatentNummer")) {
+            if (!(request.getParameter("KapitaenspatentNummer").isEmpty())) {
+                KapPatNr = request.getParameter("KapitaenspatentNummer");
+            }
+        }
+        if (request.getParameterMap().containsKey("Seemeilen")) {
             if (!(request.getParameter("Seemeilen").isEmpty())) {
                 seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
             }
-    }
-    if(request.getParameterMap().containsKey("Lizenznummer")) {
-        if (!(request.getParameter("Lizenznummer").isEmpty())) {
-            LizNr = request.getParameter("Lizenznummer");
         }
-    }
-    if(request.getParameterMap().containsKey("Ausbildungsgrad")) {
-        if (!(request.getParameter("Ausbildungsgrad").isEmpty())) {
-            Ausbildungsgrad = request.getParameter("Ausbildungsgrad");
+        if (request.getParameterMap().containsKey("Lizenznummer")) {
+            if (!(request.getParameter("Lizenznummer").isEmpty())) {
+                LizNr = request.getParameter("Lizenznummer");
+            }
         }
+        if (request.getParameterMap().containsKey("Ausbildungsgrad")) {
+            if (!(request.getParameter("Ausbildungsgrad").isEmpty())) {
+                Ausbildungsgrad = request.getParameter("Ausbildungsgrad");
+            }
+        }
+        if (request.getParameterMap().containsKey("capTechUpdate")) {
+            if (!request.getParameter("capTechUpdate").isEmpty())
+                capTechUpdate = Integer.parseInt(request.getParameter("capTechUpdate".toString()));
+        }
+        session.setAttribute("capTechUpdate", capTechUpdate);
+        session.setAttribute("LizNr", LizNr);
+        session.setAttribute("KapPatNr", KapPatNr);
+        session.setAttribute("seemeilen", seemeilen);
+        session.setAttribute("Ausbild", Ausbildungsgrad);
+
+
+        session.setAttribute("currentUser", request.getParameter("SVNR"));
+
+        if (request.getParameterMap().containsKey("btn-speichern")) {
+            save = true;
+        }
+        if (request.getParameterMap().containsKey("btn-update")) {
+            update = true;
+        }
+
+        session.setAttribute("insertKap", "");
+        session.setAttribute("insertTech", "");
+
+        String insertKap = session.getAttribute("insertKap").toString();
+        String insertTech = session.getAttribute("insertTech").toString();
     }
-    if(request.getParameterMap().containsKey("capTechUpdate")) {
-        if (!request.getParameter("capTechUpdate").isEmpty())
-            capTechUpdate = Integer.parseInt(request.getParameter("capTechUpdate".toString()));
+    else{
+        session.setAttribute("debugFailure", "Select Angestellter/Techniker/Kapitaen...");
     }
-    session.setAttribute( "capTechUpdate", capTechUpdate);
-    session.setAttribute( "LizNr", LizNr);
-    session.setAttribute("KapPatNr", KapPatNr);
-    session.setAttribute("seemeilen", seemeilen);
-    session.setAttribute( "Ausbild", Ausbildungsgrad);
-
-    session.setAttribute( "Kontonummer", request.getParameter("Kontonummer"));
-    session.setAttribute( "AngKapTech", request.getParameter("capTech"));
-    session.setAttribute( "currentUser", request.getParameter("SVNR"));
-
-    if(request.getParameterMap().containsKey("btn-speichern")){
-        save = true;
-    }
-    if(request.getParameterMap().containsKey("btn-update")) {
-        update = true;
-    }
-
-    session.setAttribute("insertKap", "");
-    session.setAttribute("insertTech", "");
-
-    String insertKap = session.getAttribute("insertKap").toString();
-    String insertTech = session.getAttribute("insertTech").toString();
-
 
 %>
 
@@ -133,7 +144,7 @@
 <%--                                --%>
 <%--                            </c:if>--%>
 
-                            <a id="btn-ok" name="btn-ok" href="../index.jsp" value="Ok">Ok</a>
+                            <a id="btn-ok" name="btn-ok" href="clear_all_attributes.jsp" value="Ok">Ok</a>
                         </th>
                     </tr>
 
@@ -141,8 +152,8 @@
 
             </table>
 
-
-<%--            <c:out value='${sessionScope.currentUser}' />--%>
+            <c:out value='${sessionScope.debugFailure}' />
+            <c:out value='${sessionScope.BLZ}' />
 
 
 
