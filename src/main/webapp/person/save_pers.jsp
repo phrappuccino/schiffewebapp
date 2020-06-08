@@ -135,8 +135,8 @@
                 }
 
 
-                sqlstring = "insert into angestellter_pmg (SVNR, BLZ, Kontonummer)" +
-                        "values ('" + currentUser + "','" + BLZ + "', '" + Kontonummer + "')";
+                sqlstring = "insert into angestellter_pmg (ANGESTELLTENNUMMER, SVNR, BLZ, Kontonummer)" +
+                        "values (seqAng.nextval, '" + currentUser + "','" + BLZ + "', '" + Kontonummer + "')";
 
 
                 session.setAttribute("debug",sqlstring);
