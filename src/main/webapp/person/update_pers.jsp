@@ -109,7 +109,104 @@
 
         //Angestellter = 3
         case 3:
+            int old_BLZ = 0;
+            String old_Kontonummer = "";
             // zu kompliziert zuerst anlegen neuer Bankverbindung danach update der Person und danach remove der alten Bankverbindung
+            // Insert neues Gehaltskonto
+            sqlstring = "insert into gehaltskonto " +
+                    "values ('" + BLZ + "', '" + Kontonummer + "', " + 150 + ")";
+            session.setAttribute("debug",sqlstring);
+
+            try {
+//                        Class.forName("com.mysql.cj.jdbc.Driver");
+//                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
+//                        Statement stmt = con.createStatement();
+//                        int rs = stmt.executeUpdate(sqlstring);
+//                        con.close();
+
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
+                Statement stmt = con.createStatement();
+                int rs = stmt.executeUpdate(sqlstring);
+                con.close();
+
+
+            } catch (Exception e) {
+                session.setAttribute("debugFailure", "Failure: " + e);
+            }
+            //Speichern der alten Kontodaten
+            sqlstring = "select BLZ, Kontonummer from Angestellter_PMG Where SVNR="+currentUser+"";
+            session.setAttribute("debug",sqlstring);
+
+            try {
+//                        Class.forName("com.mysql.cj.jdbc.Driver");
+//                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
+//                        Statement stmt = con.createStatement();
+//                        int rs = stmt.executeUpdate(sqlstring);
+//                        con.close();
+
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sqlstring);
+                while (rs.next()) {
+                    old_Kontonummer = rs.getString("Kontonummer");
+                    old_BLZ = Integer.parseInt(rs.getString("BLZ"));
+                }
+                con.close();
+
+
+            } catch (Exception e) {
+                session.setAttribute("debugFailure", "Failure: " + e);
+            }
+
+
+
+            //Update User
+            sqlstring = "Update  ANGESTELLTER_PMG " +
+                    "set BLZ = '" + BLZ + "', Kontonummer ='" + Kontonummer + "' where SVNR = " + currentUser + "";
+            session.setAttribute("debug",sqlstring);
+            try {
+//                            Class.forName("com.mysql.cj.jdbc.Driver");
+//                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
+//                            Statement stmt = con.createStatement();
+//                            int rs = stmt.executeUpdate(sqlstring);
+//                            con.close();
+
+
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
+                Statement stmt = con.createStatement();
+                int rs = stmt.executeUpdate(sqlstring);
+                con.close();
+
+
+
+            } catch (Exception e) {
+                session.setAttribute("debugFailure", "Failure: " + e);
+            }
+            //Remove old Gehaltskonto
+            sqlstring = "DELETE FROM Gehaltskonto Where BLZ=" + old_BLZ +" and Kontonummer='" + old_Kontonummer + "'";
+            session.setAttribute("debug",sqlstring);
+            try {
+//                            Class.forName("com.mysql.cj.jdbc.Driver");
+//                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
+//                            Statement stmt = con.createStatement();
+//                            int rs = stmt.executeUpdate(sqlstring);
+//                            con.close();
+
+
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
+                Statement stmt = con.createStatement();
+                int rs = stmt.executeUpdate(sqlstring);
+                con.close();
+
+
+
+            } catch (Exception e) {
+                session.setAttribute("debugFailure", "Failure: " + e);
+            }
     }
 %>
     <c:out value='${sessionScope.debugFailure}' />
