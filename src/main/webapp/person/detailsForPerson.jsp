@@ -73,7 +73,7 @@
                     <c:choose>
                 <%--        Angestellter wurde nicht gefunden--%>
                     <c:when test="${angestellt.rowCount <= 0}">
-                            <div id="blzNr">
+                            <div id="blzNr" style="display: inline">
                             <label for="Bankleitzahl">Bankleitzahl:</label>
 
                             <select id="Bankleitzahl" name="Bankleitzahl">
@@ -84,7 +84,7 @@
                                 </c:forEach>
                             </select>
                             </div>
-                        <div id="KntNr">
+                        <div id="KntNr" style="display: inline">
                         <label for="Kontonummer">Kontonummer:</label>
                         <input type="text" id="Kontonummer" name="Kontonummer" maxlength="30"/>
                         </div>
@@ -94,7 +94,7 @@
                     </c:when>
                 <%--        Angestellter gefunden--%>
                         <c:otherwise>
-                            <div id="blzNr">
+                            <div id="blzNr" style="display: inline">
                             <label for="Bankleitzahl">Bankleitzahl:</label>
                             <select id="Bankleitzahl" name="Bankleitzahl">
                                 <c:forEach var="bank" items="${banken.rows}">
@@ -117,7 +117,7 @@
 
 
 
-                        <div id="KntNr">
+                        <div id="KntNr" style="display: inline">
                         <label for="Kontonummer">Kontonummer:</label>
                         <input type="text" id="Kontonummer" name="Kontonummer"
                                 <c:forEach var="ang" items="${angestellt.rows}">
