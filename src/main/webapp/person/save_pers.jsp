@@ -19,6 +19,7 @@
     String Ausbild = "";
     String Kontonummer = "";
     String currentUser = "";
+    session.setAttribute("debugFailure", "Works...");
 
     ang =Boolean.parseBoolean(session.getAttribute("ang").toString());
     BLZ =Integer.parseInt(session.getAttribute("BLZ").toString());
@@ -61,16 +62,16 @@
 //                            con.close();
 
 
-                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Class.forName("oracle.jdbc.driver.OracleDriver");
                     Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
                     Statement stmt = con.createStatement();
                     int rs = stmt.executeUpdate(sqlstring);
                     con.close();
 
 
-                    session.setAttribute("insertKap", "Sie sind nun Kapitaen.");
+
                 } catch (Exception e) {
-                    System.out.println(e);
+                    session.setAttribute("debugFailure", "Failure: " + e);
                 }
             } else {
                 session.setAttribute("insertKap", "Fehler Sie sind kein Angestellter");
@@ -90,7 +91,7 @@
 //                        int rs = stmt.executeUpdate(sqlstring);
 //                        con.close();
 
-                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Class.forName("oracle.jdbc.driver.OracleDriver");
                     Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
                     Statement stmt = con.createStatement();
                     int rs = stmt.executeUpdate(sqlstring);
@@ -99,7 +100,7 @@
 
                     session.setAttribute("insertTech", "Sie sind nun Techniker.");
                 } catch (Exception e) {
-                    System.out.println(e);
+                    session.setAttribute("debugFailure", "Failure: " + e);
                 }
 
             } else {
@@ -120,7 +121,7 @@
 //                        int rs = stmt.executeUpdate(sqlstring);
 //                        con.close();
 
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                Class.forName("oracle.jdbc.driver.OracleDriver");
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
                 Statement stmt = con.createStatement();
                 int rs = stmt.executeUpdate(sqlstring);
@@ -128,7 +129,7 @@
 
 
             } catch (Exception e) {
-                System.out.println(e);
+                session.setAttribute("debugFailure", "Failure: " + e);
             }
 
 
@@ -145,21 +146,21 @@
 //                        int rs = stmt.executeUpdate(sqlstring);
 //                        con.close();
 
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                Class.forName("oracle.jdbc.driver.OracleDriver");
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
                 Statement stmt = con.createStatement();
                 int rs = stmt.executeUpdate(sqlstring);
                 con.close();
 
             } catch (Exception e) {
-                System.out.println(e);
+                session.setAttribute("debugFailure", "Failure: " + e);
             }
             break;
         default:
             break;
     }
 %>
-<%--    <c:out value='${sessionScope.currentUser}' />--%>
-<%--    <br>--%>
-<%--    <c:out value='${sessionScope.debug}' />--%>
+    <c:out value='${sessionScope.debugFailure}' />
+    <br>
+    <c:out value='${sessionScope.debug}' />
 </div>

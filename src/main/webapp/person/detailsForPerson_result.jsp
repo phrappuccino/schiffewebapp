@@ -121,7 +121,7 @@
 <%--                                --%>
 <%--                            </c:if>--%>
 
-                            <button id="btn-ok" name="btn-ok" href="./index.jsp" value="Ok">Ok</button>
+                            <a id="btn-ok" name="btn-ok" href="../index.jsp" value="Ok">Ok</a>
                         </th>
                     </tr>
 
