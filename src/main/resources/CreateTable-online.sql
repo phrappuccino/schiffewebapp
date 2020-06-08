@@ -1,3 +1,8 @@
+CREATE SEQUENCE seqTypSchiff START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seqAng START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seqInvSchiff START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seqLog START WITH 1 INCREMENT BY 1;
+
 CREATE TABLE Person(
                        SVNR VARCHAR(15) ,
                        Vorname VARCHAR(30),
@@ -334,11 +339,11 @@ VALUES (151929051998,8);
 
 
 INSERT INTO Schifftyp
-VALUES (seqTypSchiff, 'A. C. BOOTWERFT GesmbH', 'Kreuzfahrtschiff',228081,700);
+VALUES (seqTypSchiff.nextval, 'A. C. BOOTWERFT GesmbH', 'Kreuzfahrtschiff',228081,700);
 INSERT INTO Schifftyp
-VALUES (seqTypSchiff, 'GEB GLASTIC BOOTSBAU und HANDEL', 'Passagierschiff', 90700,450);
+VALUES (seqTypSchiff.nextval, 'GEB GLASTIC BOOTSBAU und HANDEL', 'Passagierschiff', 90700,450);
 INSERT INTO Schifftyp
-VALUES (seqTypSchiff, 'HOLIDAY-Yachting GesmbH', 'Kombischiff', 54282,150);
+VALUES (seqTypSchiff.nextval, 'HOLIDAY-Yachting GesmbH', 'Kombischiff', 54282,150);
 
 
 INSERT INTO Techniker_wartet_Schiffstyp
