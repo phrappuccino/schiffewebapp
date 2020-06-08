@@ -20,6 +20,7 @@
     String Kontonummer = "";
     String currentUser = "";
     session.setAttribute("debugFailure", "Works...");
+    session.setAttribute("debug", "what happpened?");
 
     ang =Boolean.parseBoolean(session.getAttribute("ang").toString());
     BLZ =Integer.parseInt(session.getAttribute("BLZ").toString());
@@ -35,8 +36,8 @@
         Kontonummer = session.getAttribute("Kontonummer").toString();
     }
 
-    Integer AngKapTech =Integer.parseInt(session.getAttribute("AngKapTech").toString());
-
+    Integer AngKapTech =Integer.parseInt(session.getAttribute("capTechUpdate").toString());
+    session.setAttribute("debug", AngKapTech);
     if(session.getAttribute("currentUser") != null) {
         currentUser = session.getAttribute("currentUser").toString();
     }
@@ -51,7 +52,7 @@
         case 1:
             if (ang) {
                 sqlstring = "Update  kapitän_istangestellter " +
-                        "set (KAPITÄNSPATENTNUMMER = '" + KapPatNr + "', SEEMEILEN =" + seemeilen + ") where SVNR = " + currentUser + "";
+                        "set KAPITÄNSPATENTNUMMER = '" + KapPatNr + "', SEEMEILEN ='" + seemeilen + "' where SVNR = " + currentUser + "";
                 session.setAttribute("debug",sqlstring);
                 try {
 //                            Class.forName("com.mysql.cj.jdbc.Driver");
@@ -80,7 +81,7 @@
         case 2:
             if (ang) {
                 sqlstring = "Update techniker_istangestellter " +
-                        "set (LIZENZNUMMER='" + LizNr + "', AUSBILDUNGSGRAD=" + Ausbild + ") where SVNR="+currentUser;
+                        "set LIZENZNUMMER='" + LizNr + "', AUSBILDUNGSGRAD='" + Ausbild + "' where SVNR="+currentUser+"";
                 session.setAttribute("debug",sqlstring);
 
                 try {

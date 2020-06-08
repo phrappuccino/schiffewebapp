@@ -32,7 +32,7 @@
     String Ausbildungsgrad = "";
     boolean save = false;
     boolean update = false;
-
+    int capTechUpdate = 0;
 
     if (Integer.parseInt(request.getParameter("bool_Ang")) > 0){
         session.setAttribute("ang", true);
@@ -46,19 +46,31 @@
         ang = false;
     }
 
-    if(!(request.getParameter("KapitaenspatentNummer").isEmpty())) {
-        KapPatNr = request.getParameter("KapitaenspatentNummer");
+    if(request.getParameterMap().containsKey("KapitaenspatentNummer")) {
+        if(!(request.getParameter("KapitaenspatentNummer").isEmpty())) {
+            KapPatNr = request.getParameter("KapitaenspatentNummer");
+        }
     }
-    if(!(request.getParameter("Seemeilen").isEmpty())) {
-        seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
+    if(request.getParameterMap().containsKey("Seemeilen")) {
+            if (!(request.getParameter("Seemeilen").isEmpty())) {
+                seemeilen = Integer.parseInt(request.getParameter("Seemeilen"));
+            }
     }
-    if(!(request.getParameter("Lizenznummer").isEmpty())) {
-        LizNr = request.getParameter("Lizenznummer");
+    if(request.getParameterMap().containsKey("Lizenznummer")) {
+        if (!(request.getParameter("Lizenznummer").isEmpty())) {
+            LizNr = request.getParameter("Lizenznummer");
+        }
     }
-    if(!(request.getParameter("Ausbildungsgrad").isEmpty())) {
-        Ausbildungsgrad = request.getParameter("Ausbildungsgrad");
+    if(request.getParameterMap().containsKey("Ausbildungsgrad")) {
+        if (!(request.getParameter("Ausbildungsgrad").isEmpty())) {
+            Ausbildungsgrad = request.getParameter("Ausbildungsgrad");
+        }
     }
-
+    if(request.getParameterMap().containsKey("capTechUpdate")) {
+        if (!request.getParameter("capTechUpdate").isEmpty())
+            capTechUpdate = Integer.parseInt(request.getParameter("capTechUpdate".toString()));
+    }
+    session.setAttribute( "capTechUpdate", capTechUpdate);
     session.setAttribute( "LizNr", LizNr);
     session.setAttribute("KapPatNr", KapPatNr);
     session.setAttribute("seemeilen", seemeilen);
