@@ -153,7 +153,6 @@
             </table>
 
             <c:out value='${sessionScope.debugFailure}' />
-            <c:out value='${sessionScope.BLZ}' />
 
 
 
