@@ -275,17 +275,23 @@
             switch (inputValue) {
                 case "Angestellter":
                     document.getElementById("capTechUpdate").value = "3";
-                    document.getElementById("rdAngestellter").setAttribute("checked", "true");
+                    if((document.getElementById("bool_Tech").value == 0) && (document.getElementById("bool_Kap").value == 0)){
+                        document.getElementById("rdAngestellter").setAttribute("checked", "true");
+                    }
                     changerForButtons("bool_Ang");
                     break;
                 case "Techniker":
                     document.getElementById("capTechUpdate").value = "2";
-                    document.getElementById("rdTechniker").setAttribute("checked", "true");
+                    if((document.getElementById("bool_Tech").value == 0) && (document.getElementById("bool_Kap").value == 0)){
+                        document.getElementById("rdTechniker").setAttribute("checked", "true");
+                    }
                     changerForButtons("bool_Tech");
                     break;
                 case "Kapitaen":
                     document.getElementById("capTechUpdate").value = "1";
-                    document.getElementById("rdKapitaen").setAttribute("checked", "true");
+                    if((document.getElementById("bool_Tech").value == 0) && (document.getElementById("bool_Kap").value == 0)) {
+                        document.getElementById("rdKapitaen").setAttribute("checked", "true");
+                    }
                     changerForButtons("bool_Kap");
                     break;
                 default:
