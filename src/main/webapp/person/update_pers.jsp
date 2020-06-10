@@ -59,6 +59,7 @@
 //                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
 //                            Statement stmt = con.createStatement();
 //                            int rs = stmt.executeUpdate(sqlstring);
+//                            stmt.close();
 //                            con.close();
 
 
@@ -66,6 +67,7 @@
                     Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
                     Statement stmt = con.createStatement();
                     int rs = stmt.executeUpdate(sqlstring);
+                    stmt.close();
                     con.close();
 
 
@@ -89,12 +91,14 @@
 //                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
 //                        Statement stmt = con.createStatement();
 //                        int rs = stmt.executeUpdate(sqlstring);
+//                        stmt.close();
 //                        con.close();
 
                     Class.forName("oracle.jdbc.driver.OracleDriver");
                     Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
                     Statement stmt = con.createStatement();
                     int rs = stmt.executeUpdate(sqlstring);
+                    stmt.close();
                     con.close();
 
 
@@ -122,12 +126,14 @@
 //                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
 //                        Statement stmt = con.createStatement();
 //                        int rs = stmt.executeUpdate(sqlstring);
+//                        stmt.close();
 //                        con.close();
 
                 Class.forName("oracle.jdbc.driver.OracleDriver");
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
                 Statement stmt = con.createStatement();
                 int rs = stmt.executeUpdate(sqlstring);
+                stmt.close();
                 con.close();
 
 
@@ -143,6 +149,7 @@
 //                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
 //                        Statement stmt = con.createStatement();
 //                        int rs = stmt.executeUpdate(sqlstring);
+//                        stmt.close();
 //                        con.close();
 
                 Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -153,6 +160,7 @@
                     old_Kontonummer = rs.getString("Kontonummer");
                     old_BLZ = Integer.parseInt(rs.getString("BLZ"));
                 }
+                stmt.close();
                 con.close();
 
 
@@ -171,6 +179,7 @@
 //                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
 //                            Statement stmt = con.createStatement();
 //                            int rs = stmt.executeUpdate(sqlstring);
+//                            stmt.close();
 //                            con.close();
 
 
@@ -178,6 +187,7 @@
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
                 Statement stmt = con.createStatement();
                 int rs = stmt.executeUpdate(sqlstring);
+                stmt.close();
                 con.close();
 
 
@@ -193,6 +203,7 @@
 //                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BIC4A20_04_Schifffahrt", "root", "");
 //                            Statement stmt = con.createStatement();
 //                            int rs = stmt.executeUpdate(sqlstring);
+//                            stmt.close();
 //                            con.close();
 
 
@@ -200,6 +211,7 @@
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "bic4a20_04", "guoXie4");
                 Statement stmt = con.createStatement();
                 int rs = stmt.executeUpdate(sqlstring);
+                stmt.close();
                 con.close();
 
 
