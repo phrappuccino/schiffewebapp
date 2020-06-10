@@ -220,8 +220,8 @@
                     <th align="center">
                     <br>
                         <input type="hidden" id="capTechUpdate" name="capTechUpdate" maxlength="50" value="0">
-                        <button id="btn-speichern" name="btn-speichern" value="btn-speichern" type="submit" hidden="true">Speichern</button>
-                        <button id="btn-update" name="btn-update" value="btn-update" type="submit" hidden="true">Update</button>
+                        <button id="btn-speichern" name="btn-speichern" value="btn-speichern" type="submit" style="visibility: hidden">Speichern</button>
+                        <button id="btn-update" name="btn-update" value="btn-update" type="submit" style="visibility: hidden">Update</button>
                     </th>
                 </tr>
                 </form>
@@ -295,11 +295,11 @@
         }
         function changerForButtons(boolValue){
             if(document.getElementById(boolValue).value == 1){
-                document.getElementById("btn-speichern").setAttribute("hidden", true);
-                document.getElementById("btn-update").removeAttribute("hidden");
+                document.getElementById("btn-speichern").style.visibility = "hidden";;
+                document.getElementById("btn-update").style.visibility = "visible";
             }else {
-                document.getElementById("btn-speichern").removeAttribute("hidden");
-                document.getElementById("btn-update").setAttribute("hidden", true);
+                document.getElementById("btn-speichern").style.visibility = "visible";
+                document.getElementById("btn-update").style.visibility = "hidden";
             }
         }
 
