@@ -89,9 +89,9 @@
                         <input type="text" id="Kontonummer" name="Kontonummer" maxlength="30"/>
                         </div>
                         <br>
-                        <input type="number" id="bool_Ang" name="bool_Ang" style="display: none" value=0></input>
-                        <input type="number" id="bool_Tech" name ="bool_Tech" style="display: none" value=0></input>
-                        <input type="number" id="bool_Kap" name="bool_Kap" style="display: none" value=0></input>
+                        <input type="number" id="bool_Ang" name="bool_Ang" style="display: none" value='0'/>
+                        <input type="number" id="bool_Tech" name ="bool_Tech" style="display: none" value='0'/>
+                        <input type="number" id="bool_Kap" name="bool_Kap" style="display: none" value='0'/>
 
 
                     </c:when>
@@ -116,7 +116,7 @@
                                 </c:forEach>
                             </select>
                             </div>
-                            <input type="number" id="bool_Ang" name="bool_Ang" style="display: none" value=1></input>
+
 
                         <div id="KntNr" style="visibility: visible">
                         <label for="Kontonummer">Kontonummer:</label>
@@ -137,12 +137,9 @@
                                 select * from kapitän_istangestellter where SVNR = <%=userID%>
                             </sql:query>
 
-
-                            <input type="number" id="bool_Tech" name ="bool_Tech" style="display: none" value="<c:out value="${techniker.rowCount}"/>"></input>
-                            <input type="number" id="bool_Kap" name="bool_Kap" style="display: none" value="<c:out value="${kapitaen.rowCount}"/>"></input>
-
-
-
+                            <input type="number" id="bool_Ang" name="bool_Ang" style="display: none" value='1'/>
+                            <input type="number" id="bool_Tech" name ="bool_Tech" style="display: none" value="<c:out value="${techniker.rowCount}"/>"/>
+                            <input type="number" id="bool_Kap" name="bool_Kap" style="display: none" value="<c:out value="${kapitaen.rowCount}"/>"/>
 
 
                         </c:otherwise>
@@ -159,35 +156,52 @@
                                 <input type="Text" id="KapitaenspatentNummer" name="KapitaenspatentNummer"
                                 <c:if test="${(kapitaen.rowCount > 0)}">
                                     <c:forEach var="kap" items="${kapitaen.rows}">
-                                            <c:out value="value=${kap.KapitänspatentNummer}"/> maxlength="255"/>
+                                            <c:out value="value=${kap.KapitänspatentNummer}"/>
                                     </c:forEach>
                                 </c:if>
+                                       maxlength="255"/>
                                 <label for="Seemeilen">Gefahrene Seemeilen:</label>
                                 <input type="Text" id="Seemeilen" name="Seemeilen"
                                 <c:if test="${(kapitaen.rowCount > 0)}">
                                     <c:forEach var="kap" items="${kapitaen.rows}">
-                                        <c:out value="value=${kap.Seemeilen}"/> maxlength="5" />
+                                        <c:out value="value=${kap.Seemeilen}"/>
                                     </c:forEach>
                                 </c:if>
-
+                                maxlength="5" />
                             </div>
+                            <input type="number" id="capTech" name="capTech"
+                                    <c:choose>
+                                        <c:when test="${(techniker.rowCount > 0 or kapitaen.rowCount > 0)}">
 
+                                            <c:if test="${(techniker.rowCount > 0)}">
+                                                <c:out value="value=2"></c:out>
+                                            </c:if>
+                                            <c:if test="${(kapitaen.rowCount > 0)}">
+                                                <c:out value="value=1"></c:out>
+                                            </c:if>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:out value="value=3"></c:out>
+                                        </c:otherwise>
+                                    </c:choose>
+                            />
                             <div id="techi" style="visibility: hidden">
                                 <label for="Lizenznummer">Techniker Lizenznummer:</label>
                                 <input type="Text" id="Lizenznummer" name="Lizenznummer"
                                 <c:if test="${(techniker.rowCount > 0)}">
                                     <c:forEach var="tec" items="${techniker.rows}">
-                                            <c:out value="value=${tec.Lizenznummer}"/> maxlength="255"/>
+                                            <c:out value="value=${tec.Lizenznummer}"/>
                                 </c:forEach>
                                 </c:if>
+                                maxlength="255"/>
                                 <label for="Ausbildungsgrad">Ausbildungsgrad:</label>
                                 <input type="Text" id="Ausbildungsgrad" name="Ausbildungsgrad"
                                 <c:if test="${(techniker.rowCount > 0)}">
                                     <c:forEach var="tec" items="${techniker.rows}">
-                                        <c:out value="value=${tec.Ausbildungsgrad}"/> maxlength="255"/>
+                                        <c:out value="value=${tec.Ausbildungsgrad}"/>
                                 </c:forEach>
                                 </c:if>
-
+                                maxlength="255"/>
                             </div>
 
                     </c:when>
@@ -210,7 +224,7 @@
                             <label for="KapitaenspatentNummer">Nummer des Kapitaenspatentes:</label>
                             <input type="Text" id="KapitaenspatentNummer" name="KapitaenspatentNummer" maxlength="255"/>
                             <label for="Seemeilen">Gefahrene Seemeilen:</label>
-                            <input type="Text" id="Seemeilen" name="Seemeilen" maxlength="10"/>
+                            <input type="Text" id="Seemeilen" name="Seemeilen" maxlength="5"/>
                         </div>
                     </c:otherwise>
                     </c:choose>
@@ -248,18 +262,21 @@
 
             switch(inputValue) {
                 case "Techniker":
+                    document.getElementById("capTechUpdate").value = "2";
                     document.getElementById("Kapi").style.visibility = "hidden";
                     document.getElementById("blzNr").style.visibility = "hidden";
                     document.getElementById("KntNr").style.visibility = "hidden";
                     document.getElementById("techi").style.visibility = "visible";
                     break;
                 case "Kapitaen":
+                    document.getElementById("capTechUpdate").value = "1";
                     document.getElementById("techi").style.visibility = "hidden";
                     document.getElementById("Kapi").style.visibility = "visible";
                     document.getElementById("blzNr").style.visibility = "hidden";
                     document.getElementById("KntNr").style.visibility = "hidden";
                     break;
                 case "Angestellter":
+                    document.getElementById("capTechUpdate").value = "3";
                     document.getElementById("blzNr").style.visibility = "visible";
                     document.getElementById("KntNr").style.visibility = "visible";
                 default:
@@ -274,21 +291,18 @@
         function changeButton(inputValue) {
             switch (inputValue) {
                 case "Angestellter":
-                    document.getElementById("capTechUpdate").value = "3";
                     if((document.getElementById("bool_Tech").value == 0) && (document.getElementById("bool_Kap").value == 0)){
                         document.getElementById("rdAngestellter").setAttribute("checked", "true");
                     }
                     changerForButtons("bool_Ang");
                     break;
                 case "Techniker":
-                    document.getElementById("capTechUpdate").value = "2";
                     if((document.getElementById("bool_Tech").value == 0) && (document.getElementById("bool_Kap").value == 0)){
                         document.getElementById("rdTechniker").setAttribute("checked", "true");
                     }
                     changerForButtons("bool_Tech");
                     break;
                 case "Kapitaen":
-                    document.getElementById("capTechUpdate").value = "1";
                     if((document.getElementById("bool_Tech").value == 0) && (document.getElementById("bool_Kap").value == 0)) {
                         document.getElementById("rdKapitaen").setAttribute("checked", "true");
                     }
